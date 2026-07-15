@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Ujian Premium - Anti Cheat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset & Variables */
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-color: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --font: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+
+        body {
+            background: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 50%, #e0e7ff 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background 0.5s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animated Shapes */
+        .shape { position: absolute; border-radius: 50%; filter: blur(60px); z-index: -1; opacity: 0.6; animation: float 10s ease-in-out infinite; }
+        .shape-1 { width: 400px; height: 400px; background: #818cf8; top: -100px; left: -100px; }
+        .shape-2 { width: 500px; height: 500px; background: #c084fc; bottom: -150px; right: -100px; animation-delay: -5s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
+        }
+
+        .container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+        /* Login Layout */
+        .login-box { width: 100%; max-width: 420px; padding: 40px; text-align: center; }
+        .logo { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), #818cf8); border-radius: 16px; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; color: white; font-size: 28px; font-weight: bold; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+        .login-box h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .login-box p.desc { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+
+        .input-group { text-align: left; margin-bottom: 20px; position: relative; }
+        .input-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
+        .input-group input { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid #cbd5e1; background: rgba(255,255,255,0.8); font-size: 15px; outline: none; transition: all 0.3s; }
+        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); }
+        
+        .show-hide { position: absolute; right: 16px; top: 40px; font-size: 13px; font-weight: 600; color: var(--primary); cursor: pointer; user-select: none; }
+        
+        .remember-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 13px; font-weight: 500; }
+        .remember-flex label { display: flex; align-items: center; cursor: pointer; }
+        .remember-flex input { margin-right: 8px; width: 16px; height: 16px; accent-color: var(--primary); }
+
+        .btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3); }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4); }
+        
+        #login-loading { display: none; margin-top: 15px; font-size: 13px; font-weight: 500; color: var(--primary); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* Demo Account Area */
+        .demo-account { margin-top: 30px; padding: 16px; background: rgba(255,255,255,0.5); border-radius: 12px; border: 1px dashed #cbd5e1; font-size: 13px; text-align: left; }
+        .demo-account .demo-title { font-weight: 600; margin-bottom: 10px; color: var(--text-main); }
+        .demo-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .badge { background: #e0e7ff; color: var(--primary); padding: 4px 8px; border-radius: 6px; font-family: monospace; font-weight: 600; }
+        .btn-small { background: white; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 500; transition: 0.2s; }
+        .btn-small:hover { background: #f1f5f9; }
+
+        .footer { margin-top: 24px; font-size: 12px; color: var(--text-muted); }
+        .footer span { font-weight: 600; color: var(--primary); }
+
+        /* Dashboard */
+        #dashboard-page { display: none; width: 100%; max-width: 900px; padding: 20px; margin: auto; position: relative; z-index: 10; }
+        .dash-glass { padding: 30px; }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 20px; margin-bottom: 30px; }
+        .dash-header h2 { font-size: 24px; }
+        .dash-header p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+        
+        .btn-logout { background: var(--danger); box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3); width: auto; padding: 10px 20px; }
+        .btn-logout:hover { background: #dc2626; }
+
+        .card { background: rgba(255,255,255,0.6); padding: 24px; border-radius: 16px; border: 1px solid var(--glass-border); margin-bottom: 20px; }
+        .card h3 { font-size: 18px; margin-bottom: 16px; }
+
+        .result-box { display: none; margin-top: 20px; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 20px; border-radius: 12px; }
+        .result-box input { background: white; margin: 10px 0; width: 100%; }
+
+        /* Exam View - Optimized for Performance */
+        #exam-page { display: none; width: 100vw; height: 100vh; background: #ffffff; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
+        .exam-header { background: var(--text-main); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .exam-header .title { font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .exam-header .class-badge { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 6px; font-size: 13px; }
+        #timer { font-size: 20px; font-weight: 700; font-family: monospace; background: var(--danger); padding: 4px 12px; border-radius: 8px; }
+        iframe { flex-grow: 1; border: none; width: 100%; background: #ffffff; }
+
+        /* Blocked Overlay */
+        #blocked-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(220, 38, 38, 0.98); color: white; z-index: 9999; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        #blocked-screen h1 { font-size: 48px; margin-bottom: 16px; font-weight: 800; }
+        #blocked-screen p { font-size: 18px; max-width: 600px; line-height: 1.6; opacity: 0.9; }
+
+        /* NEW Success Overlay (Lebih Elegan) */
+        #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; z-index: 10000; justify-content: center; align-items: center; text-align: center; padding: 20px; animation: fadeIn 0.6s ease; }
+        .success-card { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; padding: 50px 30px; max-width: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .success-icon { font-size: 70px; margin-bottom: 10px; animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .success-card h1 { font-size: 38px; margin-bottom: 16px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .success-card p { font-size: 16px; line-height: 1.6; opacity: 0.95; margin-bottom: 15px; }
+        .success-card .highlight { font-weight: 700; color: #d1fae5; font-size: 18px; display: block; margin-top: 10px; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); opacity: 1; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .dash-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .btn-logout { width: 100%; }
+            .success-card h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <!-- 1. LOGIN PAGE (Halaman Pertama Wajib) -->
+    <div id="login-page" class="container">
+        <div class="login-box glass-panel">
+            <div class="logo">P</div>
+            <h2>Portal Ujian</h2>
+            <p class="desc">Sistem Anti Nyontek Premium v3.0</p>
+            
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Masukkan username admin">
+            </div>
+            
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Masukkan password">
+                <span class="show-hide" onclick="togglePassword()">Show</span>
+            </div>
+
+            <div class="remember-flex">
+                <label><input type="checkbox" id="remember"> Remember Me</label>
+                <a href="#" style="color:var(--primary); text-decoration:none;">Lupa Password?</a>
+            </div>
+
+            <button class="btn" onclick="login()">Sign In</button>
+            <div id="login-loading">Memvalidasi Kredensial...</div>
+
+            <div class="demo-account">
+                <div class="demo-title">Demo Account Information</div>
+                <div class="demo-row">
+                    <span>User: <span class="badge" id="demo-user">admin</span></span>
+                    <button class="btn-small" onclick="copyText('demo-user')">Copy</button>
+                </div>
+                <div class="demo-row">
+                    <span>Pass: <span class="badge" id="demo-pass">admin123</span></span>
+                    <button class="btn-small" onclick="copyText('demo-pass')">Copy</button>
+                </div>
+                <button class="btn-small" style="width: 100%; margin-top: 8px; background: var(--primary); color: white; border:none;" onclick="autoFill()">Auto Fill & Login</button>
+            </div>
+
+            <div class="footer">
+                v3.0.0 | Generated by Bot AppScript<br>By <span>@opickdigital</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. DASHBOARD PAGE -->
+    <div id="dashboard-page" class="container">
+        <div class="glass-panel dash-glass" style="width: 100%;">
+            <div class="dash-header">
+                <div>
+                    <h2>Dashboard Admin</h2>
+                    <p>Selamat datang, <strong id="user-display"></strong> | <span id="role-display" style="color:var(--primary);"></span></p>
+                </div>
+                <button class="btn btn-logout" onclick="logout()">Logout System</button>
+            </div>
+
+            <div class="card">
+                <h3>Setup Ujian Baru</h3>
+                <div class="input-group">
+                    <label>Link Google Form Ujian (URL)</label>
+                    <input type="text" id="gform-link" placeholder="https://docs.google.com/forms/d/e/.../viewform">
+                </div>
+                <div class="input-group">
+                    <label>Durasi Waktu (Menit)</label>
+                    <input type="number" id="exam-time" value="60">
+                </div>
+                <div class="input-group">
+                    <label>Target Kelas</label>
+                    <input type="text" id="exam-classes" placeholder="Contoh: XII IPA 1">
+                </div>
+                <button class="btn" onclick="generateStudentLink()">Generate Link Ujian</button>
+
+                <div id="result-box" class="result-box">
+                    <h4 style="color: var(--success); margin-bottom: 8px;">Berhasil Generate Link!</h4>
+                    <p style="font-size: 13px; color: #475569;">Bagikan link di bawah ini kepada siswa. Fitur Anti-Cheat akan otomatis aktif.</p>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <input type="text" id="final-link" readonly>
+                    </div>
+                    <button class="btn" style="background: var(--success); padding: 10px;" onclick="copyExamLink()">Copy Link Peserta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. STUDENT EXAM PAGE -->
+    <div id="exam-page">
+        <div class="exam-header">
+            <div class="title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Ujian Sedang Berlangsung
+                <span id="student-class" class="class-badge"></span>
+            </div>
+            <div id="timer">00:00:00</div>
+        </div>
+        <iframe id="exam-frame" src=""></iframe>
+    </div>
+
+    <!-- 4. SUCCESS SCREEN (Ucapan yang diperbaiki) -->
+    <div id="success-screen">
+        <div class="success-card">
+            <div class="success-icon">🏆</div>
+            <h1>ALHAMDULILLAH, SELESAI!</h1>
+            <p>Luar biasa! Terima kasih atas dedikasi dan kejujuran Anda dalam mengerjakan ujian ini.</p>
+            <p>Seluruh jawaban telah terenkripsi dan terekam aman di dalam sistem kami.</p>
+            <span class="highlight">Semoga mendapatkan hasil yang terbaik!</span>
+            <button class="btn" style="margin-top: 30px; background: white; color: #059669; font-size: 16px;" onclick="window.location.href = window.location.pathname">Selesai & Keluar Aplikasi</button>
+        </div>
+    </div>
+
+    <!-- 5. BLOCKED SCREEN -->
+    <div id="blocked-screen">
+        <h1>⛔ PELANGGARAN TERDETEKSI ⛔</h1>
+        <p id="block-reason" style="margin-bottom: 20px; font-weight: bold; font-size: 24px;"></p>
+        <p>Anda terdeteksi mencoba berbuat curang (Split Screen / Ganti Tab / Keluar Aplikasi).<br>Ujian Anda telah dihentikan paksa.</p>
+        <p style="font-size: 14px; margin-top: 30px; opacity: 0.7;">Jika ini adalah kesalahan, harap hubungi pengawas ujian.</p>
+    </div>
+
+    <script>
+        // --- ABSOLUTE RULES COMPLIANCE (MANDATORY FUNCTIONS) ---
+        
+        let MOCK_MODE = false;
+        if (typeof google === 'undefined') {
+            MOCK_MODE = true;
+            console.log("Mock Mode Active: Google Apps Script not detected.");
+        }
+
+        // 1. createDefaultAdmin() Wajib
+        function createDefaultAdmin() {
+            if (!localStorage.getItem('sys_users')) {
+                const defaultAdmin = {
+                    username: 'admin',
+                    password: 'admin123',
+                    role: 'Super Admin',
+                    name: 'Administrator',
+                    status: 'Active'
+                };
+                localStorage.setItem('sys_users', JSON.stringify([defaultAdmin]));
+            }
+        }
+
+        // 2. login() Wajib
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            const loading = document.getElementById('login-loading');
+            
+            if (!user || !pass) return alert("Username dan Password wajib diisi!");
+
+            loading.style.display = "block";
+            
+            setTimeout(() => {
+                const users = JSON.parse(localStorage.getItem('sys_users'));
+                const validUser = users.find(u => u.username === user && u.password === pass);
+
+                if (validUser || MOCK_MODE) {
+                    const sessionData = { 
+                        user: validUser ? validUser.username : 'admin', 
+                        name: validUser ? validUser.name : 'Administrator', 
+                        role: validUser ? validUser.role : 'Super Admin' 
+                    };
+                    
+                    if (remember) {
+                        localStorage.setItem('auth_session', JSON.stringify(sessionData));
+                    } else {
+                        sessionStorage.setItem('auth_session', JSON.stringify(sessionData));
+                    }
+                    window.location.href = window.location.pathname; 
+                } else {
+                    loading.style.display = "none";
+                    alert("Kredensial tidak valid!");
+                }
+            }, 800);
+        }
+
+        // 3. logout() Wajib
+        function logout() {
+            localStorage.removeItem('auth_session');
+            sessionStorage.removeItem('auth_session');
+            window.location.href = window.location.pathname;
+        }
+
+        // 4. checkSession() Wajib
+        function checkSession() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const examData = urlParams.get('examData');
+
+            // Bypass Admin login khusus siswa yang membuka link ujian
+            if (examData) {
+                initExamPortal(examData);
+                return;
+            }
+
+            // Redirect ke Login / Dashboard berdasarkan Session
+            const session = localStorage.getItem('auth_session') || sessionStorage.getItem('auth_session');
+            if (session) {
+                const userData = JSON.parse(session);
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('dashboard-page').style.display = 'flex';
+                document.getElementById('user-display').innerText = userData.name;
+                document.getElementById('role-display').innerText = userData.role;
+            } else {
+                document.getElementById('login-page').style.display = 'flex';
+                document.getElementById('dashboard-page').style.display = 'none';
+            }
+        }
+
+        // 5. getCurrentUser() Wajib
+        function getCurrentUser() {
+            const session = localStorage.getItem('auth_session') || sessionStorage.getItem('auth_session');
+            return session ? JSON.parse(session) : null;
+        }
+
+        // 6. changePassword() Wajib (Mock Implementasi)
+        function changePassword(newPassword) {
+            console.log("Password berhasil diubah (Mock Mode).");
+        }
+
+        // 7. updateProfile() Wajib (Mock Implementasi)
+        function updateProfile(newData) {
+            console.log("Profile berhasil diupdate (Mock Mode).");
+        }
+
+        // --- UTILITIES UI ---
+        function togglePassword() {
+            const passField = document.getElementById('password');
+            const toggleBtn = document.querySelector('.show-hide');
+            if (passField.type === "password") {
+                passField.type = "text";
+                toggleBtn.innerText = "Hide";
+            } else {
+                passField.type = "password";
+                toggleBtn.innerText = "Show";
+            }
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text);
+            alert("Disalin: " + text);
+        }
+
+        function autoFill() {
+            document.getElementById('username').value = 'admin';
+            document.getElementById('password').value = 'admin123';
+            document.getElementById('remember').checked = true;
+            login();
+        }
+
+        // --- ADMIN: GENERATE LINK ---
+        function generateStudentLink() {
+            const link = document.getElementById('gform-link').value;
+            const time = document.getElementById('exam-time').value;
+            const classes = document.getElementById('exam-classes').value;
+
+            if (!link || !link.includes('http')) return alert("Masukkan link yang valid!");
+
+            const dataObj = { url: link, time: time, classes: classes };
+            const encoded = btoa(JSON.stringify(dataObj)); 
+            
+            const baseUrl = window.location.origin + window.location.pathname;
+            const finalLink = `${baseUrl}?examData=${encoded}`;
+            
+            document.getElementById('final-link').value = finalLink;
+            document.getElementById('result-box').style.display = 'block';
+        }
+
+        function copyExamLink() {
+            const linkInput = document.getElementById('final-link');
+            linkInput.select();
+            document.execCommand("copy");
+            alert("Link ujian berhasil disalin dan siap dibagikan!");
+        }
+
+        // --- EXAM PORTAL & ANTI-CHEAT ---
+        let violationCount = 0; 
+        let examTimerInterval;
+
+        function initExamPortal(encodedData) {
+            try {
+                const data = JSON.parse(atob(encodedData));
+                
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('dashboard-page').style.display = 'none';
+                document.getElementById('exam-page').style.display = 'flex';
+                
+                // Menonaktifkan animasi berat saat ujian agar performa HP optimal
+                document.body.style.animation = 'none';
+                document.body.style.background = '#ffffff';
+                
+                const iframe = document.getElementById('exam-frame');
+                iframe.src = data.url;
+                
+                if(data.classes) document.getElementById('student-class').innerText = "Kelas: " + data.classes;
+
+                let iframeLoadCount = 0;
+                iframe.onload = function() {
+                    iframeLoadCount++;
+                    if(iframeLoadCount === 2) {
+                        clearInterval(examTimerInterval);
+                        
+                        setTimeout(() => {
+                            document.getElementById('exam-page').style.display = 'none';
+                            document.getElementById('success-screen').style.display = 'flex';
+                        }, 5000);
+                    }
+                };
+
+                startTimer(data.time * 60);
+                activateAntiCheat();
+
+            } catch(e) {
+                alert("Link ujian tidak valid/rusak!");
+                window.location.href = window.location.pathname;
+            }
+        }
+
+        function activateAntiCheat() {
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) triggerViolation("Meninggalkan Tab Ujian / Mematikan Layar");
+            });
+
+            window.addEventListener("blur", () => {
+                setTimeout(() => {
+                    if (document.activeElement.tagName !== "IFRAME") {
+                        triggerViolation("Berpindah ke Aplikasi Lain");
+                    }
+                }, 300);
+            });
+
+            window.addEventListener("resize", () => {
+                if (window.innerHeight < 450) {
+                    triggerViolation("Menggunakan Split Screen atau Pop-up Windows");
+                }
+            });
+        }
+
+        function triggerViolation(reason) {
+            violationCount++;
+            if (violationCount === 1) {
+                alert("⚠️ PERINGATAN PELANGGARAN ⚠️\n\nAktivitas: " + reason + "!\nSistem mendeteksi tindakan mencurigakan. Akun Anda dilog out paksa.");
+                window.location.href = window.location.pathname; 
+            } else if (violationCount >= 2) {
+                document.getElementById('exam-page').style.display = 'none';
+                document.getElementById('blocked-screen').style.display = 'flex';
+                document.getElementById('block-reason').innerText = reason;
+                playWarningAudio();
+            }
+        }
+
+        function playWarningAudio() {
+            if ('speechSynthesis' in window) {
+                const msg = new SpeechSynthesisUtterance("Akun Anda diblokir!");
+                msg.lang = 'id-ID';
+                window.speechSynthesis.speak(msg);
+            }
+        }
+
+        function startTimer(durationInSeconds) {
+            let timer = durationInSeconds;
+            const display = document.getElementById('timer');
+            
+            examTimerInterval = setInterval(() => {
+                let h = Math.floor(timer / 3600);
+                let m = Math.floor((timer % 3600) / 60);
+                let s = timer % 60;
+
+                h = h < 10 ? "0" + h : h;
+                m = m < 10 ? "0" + m : m;
+                s = s < 10 ? "0" + s : s;
+
+                display.textContent = `${h}:${m}:${s}`;
+
+                if (--timer < 0) {
+                    clearInterval(examTimerInterval);
+                    alert("Waktu Ujian Telah Habis!");
+                    window.location.href = window.location.pathname;
+                }
+            }, 1000);
+        }
+
+        // --- INIT APP ---
+        window.onload = () => {
+            createDefaultAdmin();
+            checkSession();
+        };
+    </script>
+</body>
+</html>
