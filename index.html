@@ -178,7 +178,6 @@
         .success-card h1 { font-size: 28px; margin-bottom: 16px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .success-card p { font-size: 15px; line-height: 1.6; opacity: 0.95; margin-bottom: 15px; }
         .success-card .highlight { font-weight: 700; color: #d1fae5; font-size: 16px; display: block; margin-top: 10px; }
-        .score-display { font-size: 48px; font-weight: 800; color: #fff; margin: 20px 0; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); opacity: 1; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
@@ -340,7 +339,6 @@
             <div class="success-icon">🏆</div>
             <h1>ALHAMDULILLAH, SELESAI!</h1>
             <p>Luar biasa! Terima kasih atas dedikasi dan kejujuran Anda dalam mengerjakan ujian ini.</p>
-            <div class="score-display" id="score-display"></div>
             <p>Seluruh jawaban telah terenkripsi dan terekam aman di dalam sistem kami.</p>
             <span class="highlight">Semoga mendapatkan hasil yang terbaik!</span>
             <button class="btn" style="margin-top: 30px; background: white; color: #059669; font-size: 16px;" onclick="window.location.href = window.location.pathname">Selesai & Keluar Aplikasi</button>
@@ -757,16 +755,16 @@
                 
                 if(data.classes) document.getElementById('student-class').innerText = "Kelas: " + data.classes;
 
-                // Deteksi Submit Berhasil (Hanya jika URL mengandung formResponse)
+                // Deteksi Submit Berhasil
                 iframe.onload = function() {
                     try {
                         const iUrl = iframe.contentWindow.location.href;
-                        if (iUrl.includes("formResponse") || iUrl.includes("closedForm") || iUrl.includes("thanks")) {
+                        // Cek apakah URL diarahkan ke halaman selesai submit Google Form
+                        if (iUrl.includes("formResponse") || iUrl.includes("closedform")) {
                             finishExam();
                         }
                     } catch (e) { 
-                        /* Cross origin block. Lakukan polling URL untuk mendeteksi formResponse */ 
-                        startUrlPolling(iframe);
+                        /* Cross origin block, biarkan fallback yang handle */ 
                     }
                 };
 
@@ -779,41 +777,16 @@
             }
         }
 
-        function startUrlPolling(iframe) {
-            let pollCount = 0;
-            const pollInterval = setInterval(() => {
-                if (isExamFinished || !isExamActive) {
-                    clearInterval(pollInterval);
-                    return;
-                }
-                pollCount++;
-                try {
-                    const iUrl = iframe.contentWindow.location.href;
-                    if (iUrl.includes("formResponse") || iUrl.includes("closedForm")) {
-                        clearInterval(pollInterval);
-                        finishExam();
-                    }
-                } catch (e) {
-                    /* Tetap diabaikan jika cross-origin */
-                }
-                if (pollCount > 120) clearInterval(pollInterval); // Stop polling setelah 2 menit
-            }, 1000);
-        }
-
         function finishExam() {
             if (isExamFinished) return; // Cegah double execute
             isExamFinished = true;
             isExamActive = false; // MATIKAN ANTI CHEAT DISINI
             clearInterval(examTimerInterval);
-
-            // Simulasi Skor (Karena cross-origin tidak memperbolehkan kita membaca isi Google Form)
-            const finalScore = Math.floor(Math.random() * (100 - 70 + 1)) + 70; // Skor acak antara 70-100
-            document.getElementById('score-display').innerText = `Skor Anda: ${finalScore}`;
             
             setTimeout(() => {
                 document.getElementById('exam-page').style.display = 'none';
                 document.getElementById('success-screen').style.display = 'flex';
-            }, 1000);
+            }, 2000);
         }
 
         function activateAntiCheat() {
@@ -918,4 +891,4 @@
         };
     </script>
 </body>
-</html>q
+</html>
