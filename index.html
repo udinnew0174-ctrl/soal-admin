@@ -99,7 +99,7 @@
         }
         .btn:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4); }
         .btn:active { transform: translateY(0); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
         
         #login-loading { display: none; margin-top: 15px; font-size: 13px; font-weight: 500; color: var(--primary); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
@@ -159,6 +159,22 @@
         .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
         .btn-cancel { background: #f1f5f9; color: var(--text-main); box-shadow: none; width: auto; padding: 14px 20px; }
         .btn-cancel:hover { background: #e2e8f0; }
+
+        /* Rules Page Baru */
+        #rules-page { display: none; z-index: 50; position: relative; }
+        .rules-box { width: 100%; max-width: 550px; padding: 40px; }
+        .rules-header { text-align: center; margin-bottom: 30px; }
+        .rules-header .icon-warning { font-size: 48px; margin-bottom: 10px; display: block; animation: float 3s ease-in-out infinite; }
+        .rules-header h2 { font-size: 24px; font-weight: 700; color: var(--text-main); }
+        .rules-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+        .rules-list li { display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.6); padding: 16px; border-radius: 16px; border: 1px solid var(--glass-border); transition: transform 0.2s; }
+        .rules-list li:hover { transform: translateX(5px); background: rgba(255, 255, 255, 0.9); }
+        .rules-list li span.emoji { font-size: 24px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .rules-text strong { display: block; margin-bottom: 4px; color: var(--text-main); font-size: 15px; }
+        .rules-text p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        .agree-container { background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .agree-container input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; }
+        .agree-container label { font-size: 14px; font-weight: 600; color: #1e3a8a; cursor: pointer; flex-grow: 1; user-select: none; }
 
         /* Exam View */
         #exam-page { display: none; width: 100vw; height: 100vh; background: #ffffff; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
@@ -345,7 +361,49 @@
         </div>
     </div>
 
-    <!-- 3. STUDENT EXAM PAGE -->
+    <!-- 3. HALAMAN ATURAN PRE-EXAM (FITUR BARU) -->
+    <div id="rules-page" class="container">
+        <div class="glass-panel rules-box">
+            <div class="rules-header">
+                <span class="icon-warning">🛡️</span>
+                <h2>Peraturan & Tata Tertib Ujian</h2>
+                <p class="desc" style="color: var(--text-muted); margin-top: 8px;">Harap baca dengan teliti sebelum memulai ujian.</p>
+            </div>
+            
+            <ul class="rules-list">
+                <li>
+                    <span class="emoji">🚫</span>
+                    <div class="rules-text">
+                        <strong>Sistem Anti-Cheat Aktif</strong>
+                        <p>Sistem akan memantau layar. Pelanggaran berat akan mengakibatkan ujian dihentikan secara paksa.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="emoji">📱</span>
+                    <div class="rules-text">
+                        <strong>Larangan Multi-Tasking</strong>
+                        <p>Dilarang keras membuka tab baru, menggunakan *split-screen*, atau beralih ke aplikasi lain selama ujian berlangsung.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="emoji">⏱️</span>
+                    <div class="rules-text">
+                        <strong>Waktu Ujian Otomatis Berjalan</strong>
+                        <p>Waktu <span id="rules-time-display" style="font-weight:bold; color:var(--primary);"></span> menit akan langsung dihitung mundur setelah Anda menekan tombol Lanjut.</p>
+                    </div>
+                </li>
+            </ul>
+
+            <label class="agree-container">
+                <input type="checkbox" id="agree-rules" onchange="toggleLanjutBtn()">
+                <span>Saya mengerti dan bersedia mematuhi peraturan di atas.</span>
+            </label>
+
+            <button class="btn" id="btn-lanjut" onclick="startExamFromRules()" disabled>Lanjut ke Soal Ujian</button>
+        </div>
+    </div>
+
+    <!-- 4. STUDENT EXAM PAGE -->
     <div id="exam-page">
         <div class="exam-header">
             <div class="title">
@@ -358,7 +416,7 @@
         <iframe id="exam-frame" allow="clipboard-write" src="about:blank"></iframe>
     </div>
 
-    <!-- 4. SUCCESS SCREEN -->
+    <!-- 5. SUCCESS SCREEN -->
     <div id="success-screen">
         <div class="success-card">
             <div class="success-icon">🏆</div>
@@ -370,7 +428,7 @@
         </div>
     </div>
 
-    <!-- 5. BLOCKED SCREEN (Extreme Warning) -->
+    <!-- 6. BLOCKED SCREEN (Extreme Warning) -->
     <div id="blocked-screen">
         <div class="blocked-card">
             <div class="blocked-icon">
@@ -398,7 +456,7 @@
         </div>
     </div>
 
-    <!-- 6. EDIT MODAL -->
+    <!-- 7. EDIT MODAL -->
     <div class="modal-overlay" id="edit-modal" onclick="if(event.target===this) closeModal()">
         <div class="modal-box">
             <h3>
@@ -431,7 +489,7 @@
         </div>
     </div>
 
-    <!-- 7. CONFIRM DELETE MODAL -->
+    <!-- 8. CONFIRM DELETE MODAL -->
     <div class="modal-overlay" id="delete-modal" onclick="if(event.target===this) closeDeleteModal()">
         <div class="modal-box" style="text-align: center;">
             <h3 style="justify-content: center; color: var(--danger);">Hapus Link Ujian?</h3>
@@ -465,6 +523,7 @@
         // --- SISTEM UTAMA ---
         let MOCK_MODE = typeof google === 'undefined';
         let editingId = null;
+        let pendingExamData = null; // Data ujian disimpan sementara di sini saat rules-page tampil
 
         function createDefaultAdmin() {
             localStorage.setItem('sys_users', JSON.stringify([{
@@ -515,7 +574,7 @@
             if (examDataStr) {
                 const data = decodeExamData(examDataStr);
                 if (data) {
-                    initExamPortal(data);
+                    showRulesPage(data); // Fitur Baru: Arahkan ke Rules Page dulu
                     return;
                 }
             }
@@ -524,7 +583,7 @@
                 const db = JSON.parse(localStorage.getItem('exam_db') || '[]');
                 const exam = db.find(e => e.slug === examSlug);
                 if (exam) {
-                    initExamPortal({ url: exam.url, time: exam.time, classes: exam.classes });
+                    showRulesPage({ url: exam.url, time: exam.time, classes: exam.classes }); // Fitur Baru
                     return;
                 } else {
                     document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;text-align:center;color:#ef4444;flex-direction:column;padding:20px;"><h1>404</h1><p>Link ujian tidak ditemukan, gagal dibaca, atau Anda mengakses file offline.</p><br><a href="'+getBaseUrl()+'" style="color:#6366f1;text-decoration:underline;">Kembali ke Awal</a></div>';
@@ -547,6 +606,48 @@
                 document.getElementById('dashboard-page').style.display = 'none';
             }
         }
+
+        // --- FITUR BARU: HALAMAN ATURAN PRE-EXAM ---
+        function showRulesPage(data) {
+            pendingExamData = data;
+            
+            // Sembunyikan semua halaman lain
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'none';
+            
+            // Tampilkan Rules Page
+            document.getElementById('rules-page').style.display = 'flex';
+            
+            // Set durasi dinamis ke dalam teks aturan
+            if(data.time) document.getElementById('rules-time-display').innerText = data.time;
+
+            // Reset checklist jika halaman direfresh
+            document.getElementById('agree-rules').checked = false;
+            toggleLanjutBtn();
+        }
+
+        function toggleLanjutBtn() {
+            const btn = document.getElementById('btn-lanjut');
+            const isChecked = document.getElementById('agree-rules').checked;
+            
+            if (isChecked) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            }
+        }
+
+        function startExamFromRules() {
+            document.getElementById('rules-page').style.display = 'none';
+            if (pendingExamData) {
+                initExamPortal(pendingExamData);
+            }
+        }
+        // -------------------------------------------
 
         // --- UTILITIES UI ---
         function togglePassword() {
@@ -778,7 +879,7 @@
         let examTimerInterval;
         let isExamActive = false;
         let isExamFinished = false;
-        let violationCount = 0; // Tambahan variabel hitungan paringatan
+        let violationCount = 0; 
 
         function initExamPortal(data) {
             try {
@@ -786,13 +887,14 @@
                 
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('dashboard-page').style.display = 'none';
+                document.getElementById('rules-page').style.display = 'none'; // Pastikan form rules tertutup
                 document.getElementById('blocked-screen').style.display = 'none';
                 document.getElementById('exam-page').style.display = 'flex';
                 document.body.classList.add('exam-active');
                 
                 isExamActive = true;
                 isExamFinished = false;
-                violationCount = 0; // Ba-reset tiap masuk form
+                violationCount = 0; 
 
                 const iframe = document.getElementById('exam-frame');
                 iframe.src = data.url;
