@@ -11,7 +11,7 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     
-    <title>Portal Ujian Premium - Anti Cheat & AI Scoring</title>
+    <title>Portal Ujian Premium - Anti Cheat</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -26,7 +26,6 @@
             --danger-dark: #b91c1c;
             --success: #22c55e;
             --warning: #f59e0b;
-            --info: #3b82f6;
             --font: 'Inter', sans-serif;
         }
 
@@ -75,7 +74,7 @@
         .container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
 
         /* Login Layout */
-        .login-box { width: 100%; max-width: 420px; padding: 40px; text-align: center; margin: auto; }
+        .login-box { width: 100%; max-width: 420px; padding: 40px; text-align: center; }
         .logo { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), #818cf8); border-radius: 16px; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; color: white; font-size: 28px; font-weight: bold; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
         .login-box h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
         .login-box p.desc { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
@@ -96,16 +95,16 @@
 
         .btn { 
             width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; 
-            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3); display: block; text-align: center;
+            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3); 
         }
         .btn:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4); }
         .btn:active { transform: translateY(0); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         
-        #login-loading { display: none; margin-top: 15px; font-size: 13px; font-weight: 500; color: var(--primary); animation: pulse 1.5s infinite; text-align: center; }
+        #login-loading { display: none; margin-top: 15px; font-size: 13px; font-weight: 500; color: var(--primary); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        .footer { margin-top: 24px; font-size: 12px; color: var(--text-muted); text-align: center; }
+        .footer { margin-top: 24px; font-size: 12px; color: var(--text-muted); }
         .footer span { font-weight: 600; color: var(--primary); }
 
         /* Dashboard */
@@ -118,13 +117,22 @@
         .btn-logout { background: var(--danger); box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3); width: auto; padding: 10px 20px; }
         .btn-logout:hover { background: #dc2626; }
         
+        .btn-success { background: var(--success); box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3); }
+        .btn-success:hover { background: #16a34a; }
+
+        .btn-warning { background: var(--warning); color: #000; box-shadow: none; width: auto; padding: 8px 16px; font-size: 13px; border: none; }
+        .btn-warning:hover { background: #d97706; }
+
+        .btn-danger-sm { background: white; color: var(--danger); border: 1px solid #fca5a5; box-shadow: none; width: auto; padding: 8px 16px; font-size: 13px; }
+        .btn-danger-sm:hover { background: #fef2f2; }
+
         .card { background: rgba(255,255,255,0.6); padding: 24px; border-radius: 16px; border: 1px solid var(--glass-border); margin-bottom: 20px; }
         .card h3 { font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 
         .result-box { display: none; margin-top: 20px; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 20px; border-radius: 12px; }
         .result-box input { background: white; margin: 10px 0; width: 100%; color: var(--success); font-weight: 600; font-size: 14px; }
 
-        /* History List & Buttons */
+        /* History List */
         .history-list { margin-top: 10px; display: flex; flex-direction: column; gap: 12px; }
         .history-item { 
             background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; 
@@ -136,64 +144,21 @@
         .history-url { font-size: 12px; color: var(--text-muted); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .history-meta { display: flex; gap: 15px; font-size: 13px; color: var(--text-muted); font-weight: 500; }
         .history-meta span { display: flex; align-items: center; gap: 4px; }
+        .history-actions { display: flex; gap: 8px; border-top: 1px solid #f1f5f9; padding-top: 12px; }
+        .history-actions button { flex: 1; }
         
-        /* Grid layout for buttons to prevent wrapping bugs */
-        .history-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; border-top: 1px solid #f1f5f9; padding-top: 12px; }
-        
-        .action-btn { 
-            padding: 8px 12px; font-size: 13px; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: 0.2s; text-align: center; width: 100%; 
-        }
-        .btn-edit { background: var(--warning); color: #000; }
-        .btn-edit:hover { background: #d97706; color: white; }
-        .btn-ai { background: var(--info); color: white; }
-        .btn-ai:hover { background: #2563eb; }
-        .btn-del { background: white; color: var(--danger); border: 1px solid #fca5a5; }
-        .btn-del:hover { background: #fef2f2; }
-
         .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
         .empty-state svg { margin-bottom: 15px; opacity: 0.5; }
 
-        /* Modal Base */
+        /* Modal */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 5000; justify-content: center; align-items: flex-end; padding: 0; }
-        .modal-box { background: white; border-radius: 24px 24px 0 0; padding: 24px; width: 100%; max-width: 600px; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); animation: modalIn 0.3s ease; margin: auto 0 0 0; display: flex; flex-direction: column; max-height: 90vh; }
+        .modal-box { background: white; border-radius: 24px 24px 0 0; padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); animation: modalIn 0.3s ease; margin: auto 0 0 0; max-height: 90vh; overflow-y: auto; }
         @keyframes modalIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-shrink: 0; }
-        .modal-header h3 { font-size: 20px; margin: 0; display: flex; align-items: center; gap: 10px; }
+        .modal-box h3 { margin-bottom: 20px; font-size: 20px; display: flex; justify-content: space-between; align-items: center; }
         .modal-close { cursor: pointer; font-size: 28px; color: var(--text-muted); background: none; border: none; line-height: 1; padding: 0 5px; }
-        
-        .modal-body { overflow-y: auto; flex-grow: 1; padding-bottom: 10px; }
-        .modal-actions { display: flex; gap: 10px; margin-top: 20px; flex-shrink: 0; }
-        
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
         .btn-cancel { background: #f1f5f9; color: var(--text-main); box-shadow: none; width: auto; padding: 14px 20px; }
         .btn-cancel:hover { background: #e2e8f0; }
-
-        /* AI Score Table Styles */
-        .score-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .score-table th, .score-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
-        .score-table th { background: #f8fafc; font-weight: 600; color: var(--text-main); position: sticky; top: 0; z-index: 2; }
-        .score-table tr:hover { background: #f1f5f9; }
-        .ai-loading { text-align: center; padding: 40px 20px; color: var(--primary); font-weight: 500; }
-        .ai-loading svg { animation: spin 1s linear infinite; margin-bottom: 15px; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        
-        .ai-badge { font-size: 11px; background: var(--info); color: white; padding: 4px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.5px; }
-
-        /* Rules Page */
-        #rules-page { display: none; z-index: 50; position: relative; }
-        .rules-box { width: 100%; max-width: 550px; padding: 40px; margin: auto; }
-        .rules-header { text-align: center; margin-bottom: 30px; }
-        .rules-header .icon-warning { font-size: 48px; margin-bottom: 10px; display: block; animation: float 3s ease-in-out infinite; }
-        .rules-header h2 { font-size: 24px; font-weight: 700; color: var(--text-main); }
-        .rules-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
-        .rules-list li { display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.6); padding: 16px; border-radius: 16px; border: 1px solid var(--glass-border); transition: transform 0.2s; }
-        .rules-list li:hover { transform: translateX(5px); background: rgba(255, 255, 255, 0.9); }
-        .rules-list li span.emoji { font-size: 24px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); flex-shrink: 0; }
-        .rules-text strong { display: block; margin-bottom: 4px; color: var(--text-main); font-size: 15px; }
-        .rules-text p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-        .agree-container { background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .agree-container input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
-        .agree-container label { font-size: 14px; font-weight: 600; color: #1e3a8a; cursor: pointer; flex-grow: 1; user-select: none; }
 
         /* Exam View */
         #exam-page { display: none; width: 100vw; height: 100vh; background: #ffffff; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
@@ -320,7 +285,7 @@
                     <h2>Dashboard Admin</h2>
                     <p>Selamat datang, <strong id="user-display"></strong> | <span id="role-display" style="color:var(--primary);"></span></p>
                 </div>
-                <button class="btn btn-logout" onclick="logout()" style="color:white; border:none; border-radius:8px; cursor:pointer;">Logout System</button>
+                <button class="btn btn-logout" onclick="logout()">Logout System</button>
             </div>
 
             <div class="card">
@@ -330,24 +295,19 @@
                 </h3>
                 
                 <div class="input-group">
-                    <label>Link Google Form Ujian (URL) <span style="color:red">*</span></label>
+                    <label>Link Google Form Ujian (URL)</label>
                     <input type="url" id="gform-link" placeholder="https://docs.google.com/forms/d/e/.../viewform">
-                </div>
-
-                <div class="input-group">
-                    <label>Link Google Spreadsheet Respon (Opsional)</label>
-                    <input type="url" id="gform-sheet" placeholder="https://docs.google.com/spreadsheets/d/...">
-                    <small style="font-size: 12px; color: var(--text-muted); margin-top: 4px; display: block;">* Wajib diset: "Siapa saja yang memiliki link / Anyone with the link".</small>
                 </div>
 
                 <div class="input-group">
                     <label>Nama URL (Opsional)</label>
                     <input type="text" id="custom-slug" placeholder="Contoh: ujian-matematika-xii-ipa-1" style="text-transform: lowercase;">
+                    <small style="font-size: 12px; color: var(--text-muted); margin-top: 4px; display: block;">* Akan menghasilkan format link terenkripsi.</small>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="input-group" style="margin-bottom:0;">
-                        <label>Durasi (Menit)</label>
+                        <label>Durasi Waktu (Menit)</label>
                         <input type="number" id="exam-time" value="60" min="1" inputmode="numeric">
                     </div>
                     <div class="input-group" style="margin-bottom:0;">
@@ -367,7 +327,7 @@
                     <div class="input-group" style="margin-bottom: 10px;">
                         <input type="text" id="final-link" readonly>
                     </div>
-                    <button class="btn" style="background:var(--success); box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);" onclick="copyExamLink()">Copy Link Peserta</button>
+                    <button class="btn btn-success" style="padding: 12px;" onclick="copyExamLink()">Copy Link Peserta</button>
                 </div>
             </div>
 
@@ -385,49 +345,7 @@
         </div>
     </div>
 
-    <!-- 3. HALAMAN ATURAN PRE-EXAM -->
-    <div id="rules-page" class="container">
-        <div class="glass-panel rules-box">
-            <div class="rules-header">
-                <span class="icon-warning">🛡️</span>
-                <h2>Peraturan & Tata Tertib Ujian</h2>
-                <p class="desc" style="color: var(--text-muted); margin-top: 8px;">Harap baca dengan teliti sebelum memulai ujian.</p>
-            </div>
-            
-            <ul class="rules-list">
-                <li>
-                    <span class="emoji">🚫</span>
-                    <div class="rules-text">
-                        <strong>Sistem Anti-Cheat Aktif</strong>
-                        <p>Sistem akan memantau layar. Pelanggaran berat akan mengakibatkan ujian dihentikan secara paksa.</p>
-                    </div>
-                </li>
-                <li>
-                    <span class="emoji">📱</span>
-                    <div class="rules-text">
-                        <strong>Larangan Multi-Tasking</strong>
-                        <p>Dilarang keras membuka tab baru, menggunakan *split-screen*, atau beralih ke aplikasi lain selama ujian berlangsung.</p>
-                    </div>
-                </li>
-                <li>
-                    <span class="emoji">⏱️</span>
-                    <div class="rules-text">
-                        <strong>Waktu Ujian Otomatis Berjalan</strong>
-                        <p>Waktu <span id="rules-time-display" style="font-weight:bold; color:var(--primary);"></span> menit akan langsung dihitung mundur setelah Anda menekan tombol Lanjut.</p>
-                    </div>
-                </li>
-            </ul>
-
-            <label class="agree-container">
-                <input type="checkbox" id="agree-rules" onchange="toggleLanjutBtn()">
-                <span>Saya mengerti dan bersedia mematuhi peraturan di atas.</span>
-            </label>
-
-            <button class="btn" id="btn-lanjut" onclick="startExamFromRules()" disabled>Lanjut ke Soal Ujian</button>
-        </div>
-    </div>
-
-    <!-- 4. STUDENT EXAM PAGE -->
+    <!-- 3. STUDENT EXAM PAGE -->
     <div id="exam-page">
         <div class="exam-header">
             <div class="title">
@@ -440,7 +358,7 @@
         <iframe id="exam-frame" allow="clipboard-write" src="about:blank"></iframe>
     </div>
 
-    <!-- 5. SUCCESS SCREEN -->
+    <!-- 4. SUCCESS SCREEN -->
     <div id="success-screen">
         <div class="success-card">
             <div class="success-icon">🏆</div>
@@ -452,7 +370,7 @@
         </div>
     </div>
 
-    <!-- 6. BLOCKED SCREEN -->
+    <!-- 5. BLOCKED SCREEN (Extreme Warning) -->
     <div id="blocked-screen">
         <div class="blocked-card">
             <div class="blocked-icon">
@@ -480,36 +398,30 @@
         </div>
     </div>
 
-    <!-- 7. EDIT MODAL -->
+    <!-- 6. EDIT MODAL -->
     <div class="modal-overlay" id="edit-modal" onclick="if(event.target===this) closeModal()">
         <div class="modal-box">
-            <div class="modal-header">
-                <h3>Edit Data Ujian</h3>
+            <h3>
+                Edit Data Ujian
                 <button class="modal-close" onclick="closeModal()">&times;</button>
+            </h3>
+            <input type="hidden" id="edit-id">
+            <div class="input-group">
+                <label>Link Google Form Baru</label>
+                <input type="url" id="edit-link" placeholder="https://docs.google.com/forms/d/e/...">
             </div>
-            <div class="modal-body">
-                <input type="hidden" id="edit-id">
-                <div class="input-group">
-                    <label>Link Google Form Baru</label>
-                    <input type="url" id="edit-link" placeholder="https://docs.google.com/forms/d/e/...">
+            <div class="input-group">
+                <label>Nama URL Baru</label>
+                <input type="text" id="edit-slug" placeholder="Contoh: ujian-fisika-xii" style="text-transform: lowercase;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>Durasi (Menit)</label>
+                    <input type="number" id="edit-time" min="1" inputmode="numeric">
                 </div>
-                <div class="input-group">
-                    <label>Link Spreadsheet Respon (Opsional)</label>
-                    <input type="url" id="edit-sheet" placeholder="https://docs.google.com/spreadsheets/d/...">
-                </div>
-                <div class="input-group">
-                    <label>Nama URL Baru</label>
-                    <input type="text" id="edit-slug" placeholder="Contoh: ujian-fisika-xii" style="text-transform: lowercase;">
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div class="input-group" style="margin-bottom:0;">
-                        <label>Durasi (Menit)</label>
-                        <input type="number" id="edit-time" min="1" inputmode="numeric">
-                    </div>
-                    <div class="input-group" style="margin-bottom:0;">
-                        <label>Kelas</label>
-                        <input type="text" id="edit-classes">
-                    </div>
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>Kelas</label>
+                    <input type="text" id="edit-classes">
                 </div>
             </div>
             <div class="modal-actions">
@@ -519,34 +431,15 @@
         </div>
     </div>
 
-    <!-- 8. CONFIRM DELETE MODAL -->
+    <!-- 7. CONFIRM DELETE MODAL -->
     <div class="modal-overlay" id="delete-modal" onclick="if(event.target===this) closeDeleteModal()">
-        <div class="modal-box" style="text-align: center; max-width: 400px; padding:30px;">
-            <h3 style="justify-content: center; color: var(--danger); margin-bottom: 10px;">Hapus Link Ujian?</h3>
+        <div class="modal-box" style="text-align: center;">
+            <h3 style="justify-content: center; color: var(--danger);">Hapus Link Ujian?</h3>
             <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">Tindakan ini tidak dapat dibatalkan. Siswa tidak akan bisa mengakses ujian ini lagi.</p>
             <input type="hidden" id="delete-id">
             <div class="modal-actions" style="justify-content: center;">
                 <button class="btn btn-cancel" onclick="closeDeleteModal()" style="flex:1;">Batal</button>
-                <button class="btn" style="background:var(--danger); flex:1;" onclick="confirmDelete()">Ya, Hapus</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 9. AI SCORE MODAL (FIXED UI & FETCH) -->
-    <div class="modal-overlay" id="score-modal" onclick="if(event.target===this) closeScoreModal()">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>
-                    📊 Hasil Nilai Siswa 
-                    <span class="ai-badge">AI Powered</span>
-                </h3>
-                <button class="modal-close" onclick="closeScoreModal()">&times;</button>
-            </div>
-            <div class="modal-body" id="score-result-container">
-                <!-- Hasil render tabel atau loading akan masuk ke sini -->
-            </div>
-            <div class="modal-actions">
-                <button class="btn btn-cancel" onclick="closeScoreModal()" style="width: 100%;">Tutup</button>
+                <button class="btn btn-logout" onclick="confirmDelete()" style="flex:1;">Ya, Hapus</button>
             </div>
         </div>
     </div>
@@ -572,7 +465,6 @@
         // --- SISTEM UTAMA ---
         let MOCK_MODE = typeof google === 'undefined';
         let editingId = null;
-        let pendingExamData = null; 
 
         function createDefaultAdmin() {
             localStorage.setItem('sys_users', JSON.stringify([{
@@ -623,7 +515,7 @@
             if (examDataStr) {
                 const data = decodeExamData(examDataStr);
                 if (data) {
-                    showRulesPage(data); 
+                    initExamPortal(data);
                     return;
                 }
             }
@@ -632,7 +524,7 @@
                 const db = JSON.parse(localStorage.getItem('exam_db') || '[]');
                 const exam = db.find(e => e.slug === examSlug);
                 if (exam) {
-                    showRulesPage({ url: exam.url, time: exam.time, classes: exam.classes }); 
+                    initExamPortal({ url: exam.url, time: exam.time, classes: exam.classes });
                     return;
                 } else {
                     document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;text-align:center;color:#ef4444;flex-direction:column;padding:20px;"><h1>404</h1><p>Link ujian tidak ditemukan, gagal dibaca, atau Anda mengakses file offline.</p><br><a href="'+getBaseUrl()+'" style="color:#6366f1;text-decoration:underline;">Kembali ke Awal</a></div>';
@@ -653,39 +545,6 @@
             } else {
                 document.getElementById('login-page').style.display = 'flex';
                 document.getElementById('dashboard-page').style.display = 'none';
-            }
-        }
-
-        // --- HALAMAN ATURAN PRE-EXAM ---
-        function showRulesPage(data) {
-            pendingExamData = data;
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('dashboard-page').style.display = 'none';
-            document.getElementById('rules-page').style.display = 'flex';
-            if(data.time) document.getElementById('rules-time-display').innerText = data.time;
-            document.getElementById('agree-rules').checked = false;
-            toggleLanjutBtn();
-        }
-
-        function toggleLanjutBtn() {
-            const btn = document.getElementById('btn-lanjut');
-            const isChecked = document.getElementById('agree-rules').checked;
-            
-            if (isChecked) {
-                btn.disabled = false;
-                btn.style.opacity = '1';
-                btn.style.cursor = 'pointer';
-            } else {
-                btn.disabled = true;
-                btn.style.opacity = '0.5';
-                btn.style.cursor = 'not-allowed';
-            }
-        }
-
-        function startExamFromRules() {
-            document.getElementById('rules-page').style.display = 'none';
-            if (pendingExamData) {
-                initExamPortal(pendingExamData);
             }
         }
 
@@ -719,7 +578,6 @@
 
         function generateStudentLink() {
             const link = document.getElementById('gform-link').value.trim();
-            const sheetLink = document.getElementById('gform-sheet').value.trim();
             let slug = document.getElementById('custom-slug').value.trim();
             const time = document.getElementById('exam-time').value;
             const classes = document.getElementById('exam-classes').value.trim();
@@ -748,17 +606,16 @@
                     if (db.find(e => e.slug === slug && e.id !== editingId)) {
                         return showToast(`Nama "/${slug}" sudah digunakan ujian lain!`, "warning");
                     }
-                    db[index] = { ...db[index], url: link, sheetLink: sheetLink, slug: slug, time: parseInt(time), classes: classes };
+                    db[index] = { ...db[index], url: link, slug: slug, time: parseInt(time), classes: classes };
                     saveExamDb(db);
                     showToast("Data ujian berhasil diperbarui!", "success");
                     cancelEdit();
                 }
             } else {
-                db.unshift({ id: 'EXM-' + Date.now(), url: link, sheetLink: sheetLink, slug: slug, time: parseInt(time), classes: classes, createdAt: new Date().toLocaleString('id-ID') });
+                db.unshift({ id: 'EXM-' + Date.now(), url: link, slug: slug, time: parseInt(time), classes: classes, createdAt: new Date().toLocaleString('id-ID') });
                 saveExamDb(db);
                 showToast("Link ujian baru berhasil disimpan!", "success");
                 document.getElementById('gform-link').value = '';
-                document.getElementById('gform-sheet').value = '';
                 document.getElementById('custom-slug').value = '';
                 document.getElementById('exam-time').value = '60';
                 document.getElementById('exam-classes').value = '';
@@ -806,9 +663,8 @@
                         <span>⏱️ ${exam.time} Menit</span>
                     </div>
                     <div class="history-actions">
-                        <button class="action-btn btn-edit" onclick="openEditModal('${exam.id}')">✏️ Edit</button>
-                        ${exam.sheetLink ? `<button class="action-btn btn-ai" onclick="openScoreModal('${exam.id}')">📊 Nilai</button>` : ''}
-                        <button class="action-btn btn-del" onclick="openDeleteModal('${exam.id}')">🗑️ Hapus</button>
+                        <button class="btn-small btn-warning" onclick="openEditModal('${exam.id}')">✏️ Edit</button>
+                        <button class="btn-small btn-danger-sm" onclick="openDeleteModal('${exam.id}')">🗑️ Hapus</button>
                     </div>
                 </div>
             `).join('');
@@ -840,7 +696,6 @@
             editingId = id;
             document.getElementById('edit-id').value = id;
             document.getElementById('edit-link').value = exam.url;
-            document.getElementById('edit-sheet').value = exam.sheetLink || '';
             document.getElementById('edit-slug').value = exam.slug;
             document.getElementById('edit-time').value = exam.time;
             document.getElementById('edit-classes').value = exam.classes;
@@ -856,7 +711,6 @@
         function saveEdit() {
             const id = document.getElementById('edit-id').value;
             const newLink = document.getElementById('edit-link').value.trim();
-            const newSheet = document.getElementById('edit-sheet').value.trim();
             let newSlug = document.getElementById('edit-slug').value.trim();
             const newTime = document.getElementById('edit-time').value;
             const newClasses = document.getElementById('edit-classes').value.trim();
@@ -874,7 +728,7 @@
 
             const index = db.findIndex(e => e.id === id);
             if (index !== -1) {
-                db[index] = { ...db[index], url: newLink, sheetLink: newSheet, slug: newSlug, time: parseInt(newTime), classes: newClasses };
+                db[index] = { ...db[index], url: newLink, slug: newSlug, time: parseInt(newTime), classes: newClasses };
                 saveExamDb(db);
                 showToast("Berhasil memperbarui data ujian!", "success");
                 renderHistory();
@@ -914,137 +768,17 @@
             document.getElementById('btn-generate').innerText = 'Generate Link Ujian';
             document.getElementById('btn-cancel-edit').style.display = 'none';
             document.getElementById('gform-link').value = '';
-            document.getElementById('gform-sheet').value = '';
             document.getElementById('custom-slug').value = '';
             document.getElementById('exam-time').value = '60';
             document.getElementById('exam-classes').value = '';
             document.getElementById('result-box').style.display = 'none';
         }
 
-        // --- FITUR BARU: AI CEK NILAI (FIXED CORS & STRICT JSON PARSING) ---
-        async function openScoreModal(id) {
-            const db = getExamDb();
-            const exam = db.find(e => e.id === id);
-            if (!exam || !exam.sheetLink) {
-                return showToast("Link Spreadsheet tidak ditemukan!", "error");
-            }
-
-            const modal = document.getElementById('score-modal');
-            const resultBox = document.getElementById('score-result-container');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            resultBox.innerHTML = `
-                <div class="ai-loading">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
-                    <p>Gemini AI sedang mengunduh dan menganalisis data Spreadsheet Ana...</p>
-                </div>
-            `;
-
-            try {
-                // Ekstrak ID Spreadsheet dari URL
-                const match = exam.sheetLink.match(/\/d\/([a-zA-Z0-9-_]+)/);
-                if (!match) throw new Error("Format Link Spreadsheet tidak dikenali. Pastikan link disalin dengan benar dari Google Sheets.");
-                const sheetId = match[1];
-                
-                // MENGATASI CORS BLOCKED menggunakan api.allorigins.win (metode get, aman di sebagian besar browser)
-                const targetCSVUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetCSVUrl)}`;
-                
-                const res = await fetch(proxyUrl);
-                if (!res.ok) throw new Error("Gagal terhubung ke jaringan proxy.");
-                
-                const proxyData = await res.json();
-                let csvText = proxyData.contents;
-                
-                // Cek apabila Sheets diblokir/private (Biasanya berisi HTML login Google)
-                if (!csvText || csvText.includes("<!DOCTYPE html>") || csvText.includes("<html")) {
-                    throw new Error("Akses ditolak! Pastikan akses Spreadsheet telah diset menjadi 'Siapa saja yang memiliki link / Anyone with the link'.");
-                }
-
-                // Batasi string agar request ke Gemini tidak terlalu berat (5000 char pertama)
-                if (csvText.length > 5000) csvText = csvText.substring(0, 5000);
-
-                // Kirim data ke Gemini AI dengan Mode Output Paksa JSON
-                const apiKey = "AIzaSyDSM89kgPZNfT9owyyj3fewcJz8fbwtvmo"; 
-                const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-                
-                const prompt = `Berikut adalah data mentah hasil ujian format CSV. Temukan kolom "Nama Siswa" (atau serupa) dan "Nilai/Skor".\nKembalikan HANYA array objek dengan properti "nama" dan "nilai".\nData CSV:\n${csvText}`;
-
-                const aiRes = await fetch(geminiEndpoint, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: {
-                            responseMimeType: "application/json" // Memaksa AI hanya mengirim respons berupa JSON Murni
-                        }
-                    })
-                });
-
-                if (!aiRes.ok) {
-                    const errData = await aiRes.json();
-                    throw new Error("Gangguan pada API Gemini: " + (errData.error?.message || "Internal AI Error"));
-                }
-                
-                const aiData = await aiRes.json();
-                const resultText = aiData.candidates[0].content.parts[0].text;
-                
-                // Karena kita memaksa mime-type, kita bisa langsung parse tanpa Regex aneh-aneh
-                let scoreData = JSON.parse(resultText);
-
-                if (!Array.isArray(scoreData) || scoreData.length === 0) {
-                    resultBox.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">Tidak ada data siswa yang ditemukan atau spreadsheet belum diisi peserta.</p>';
-                    return;
-                }
-
-                // Merender Tabel
-                let tableHtml = `
-                    <table class="score-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px;">No</th>
-                                <th>Nama Siswa</th>
-                                <th>Nilai / Skor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                scoreData.forEach((item, index) => {
-                    tableHtml += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td style="font-weight: 500;">${item.nama || 'Tidak diketahui'}</td>
-                            <td style="color: var(--success); font-weight: bold;">${item.nilai || '-'}</td>
-                        </tr>
-                    `;
-                });
-                
-                tableHtml += `</tbody></table>`;
-                resultBox.innerHTML = tableHtml;
-
-            } catch (error) {
-                resultBox.innerHTML = `
-                    <div style="text-align:center; padding: 20px; color: var(--danger);">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:10px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        <p style="font-weight:600; margin-bottom:5px;">Gagal Menarik Data</p>
-                        <p style="font-size:13px; color:var(--text-muted); line-height: 1.4;">${error.message}</p>
-                    </div>
-                `;
-            }
-        }
-
-        function closeScoreModal() {
-            document.getElementById('score-modal').style.display = 'none';
-            document.body.style.overflow = '';
-        }
-
         // --- EXAM PORTAL & ROBUST ANTI-CHEAT ---
         let examTimerInterval;
         let isExamActive = false;
         let isExamFinished = false;
-        let violationCount = 0; 
+        let violationCount = 0; // Tambahan variabel hitungan paringatan
 
         function initExamPortal(data) {
             try {
@@ -1052,14 +786,13 @@
                 
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('dashboard-page').style.display = 'none';
-                document.getElementById('rules-page').style.display = 'none'; 
                 document.getElementById('blocked-screen').style.display = 'none';
                 document.getElementById('exam-page').style.display = 'flex';
                 document.body.classList.add('exam-active');
                 
                 isExamActive = true;
                 isExamFinished = false;
-                violationCount = 0; 
+                violationCount = 0; // Ba-reset tiap masuk form
 
                 const iframe = document.getElementById('exam-frame');
                 iframe.src = data.url;
@@ -1173,6 +906,7 @@
             if ('vibrate' in navigator) navigator.vibrate(0); 
         }
 
+        // --- FUNGSI PELANGGARAN TERBARU ---
         function triggerViolation(reason) {
             if (isExamFinished || !isExamActive) return; 
 
@@ -1180,6 +914,7 @@
 
             if (violationCount === 1) {
                 showToast("PERINGATAN: " + reason + "! Ujian diulang dari awal.", "warning");
+                
                 const iframe = document.getElementById('exam-frame');
                 iframe.src = iframe.src; 
                 
