@@ -134,36 +134,50 @@
         .agree-clay { background: #e4e9f2; box-shadow: var(--clay-shadow-in); padding: 15px 20px; border-radius: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: all 0.2s; }
         .agree-clay label { font-size: 14px; font-weight: 700; color: var(--text-main); cursor: pointer; flex-grow: 1; user-select: none; line-height: 1.4; }
 
-        /* 4. EXAM PAGE - KHUSUS LOGO & JAM CLAYMORPHISM */
+        /* 4. EXAM PAGE - HEADER SUSUNAN BARU */
         #exam-page { display: none; width: 100vw; height: 100vh; background: #ffffff; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
         
         .exam-header { 
             background: var(--clay-bg); 
-            padding: 12px 15px; 
-            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+            padding: 10px 15px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
             border-bottom: 2px solid white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            gap: 8px;
+        }
+
+        /* Logo Keamanan Dipindah Ke Atas Sendiri */
+        .security-logo-top {
+            width: 38px; height: 38px;
+            background: var(--clay-surface);
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: var(--clay-shadow-out-sm);
+            border: 2px solid white;
+        }
+        .security-logo-top svg { width: 22px; height: 22px; stroke: var(--primary); }
+
+        /* Pembungkus agar Teks dan Jam bisa bersebelahan */
+        .exam-header-content {
+            display: flex; flex-direction: row; justify-content: center; align-items: center; 
+            gap: 15px; width: 100%; max-width: 800px; flex-wrap: wrap;
         }
         
-        /* Logo Keamanan Clay */
         .exam-title-clay { 
-            display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 14px; font-weight: 800;
+            display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800;
             background: var(--clay-surface); padding: 8px 16px; border-radius: 16px;
-            box-shadow: var(--clay-shadow-out-sm); border: 2px solid white; color: var(--primary);
+            box-shadow: var(--clay-shadow-out-sm); border: 2px solid white; color: var(--text-main);
         }
-        .exam-title-clay svg { width: 22px; height: 22px; stroke: var(--primary); }
         .class-badge { 
             background: var(--primary); color: white; padding: 4px 10px; border-radius: 8px; font-size: 12px; 
             box-shadow: inset 2px 2px 4px rgba(255,255,255,0.3), inset -2px -2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Jam Ujian Clay */
         .exam-timer-clay { 
-            font-size: 18px; font-weight: 800; font-family: monospace; 
+            font-size: 16px; font-weight: 800; font-family: monospace; 
             background: var(--danger-dark); color: white; padding: 8px 16px; border-radius: 12px; 
             box-shadow: inset 4px 4px 8px rgba(255,255,255,0.4), inset -4px -4px 8px rgba(0,0,0,0.2), var(--clay-shadow-out-sm);
-            border: 2px solid #ff9999;
-            letter-spacing: 1px;
+            border: 2px solid #ff9999; letter-spacing: 1px;
         }
 
         iframe { flex-grow: 1; border: none; width: 100%; height: 100%; background: #ffffff; display: block; }
@@ -197,7 +211,7 @@
         @keyframes slideInMob { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeOutMob { to { opacity: 0; transform: translateY(-15px); } }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE AGAR TIDAK BUG DI HP */
         @media (max-width: 600px) {
             .login-box, .dash-glass, .rules-box { padding: 25px 20px; border-radius: 28px; }
             .inner-card { padding: 20px; border-radius: 20px;}
@@ -206,10 +220,12 @@
             .rules-list li { flex-direction: column; text-align: center; gap: 10px; padding: 15px;}
             .modal-box { padding: 25px 15px; border-radius: 28px; }
             
-            /* Perkecil Logo & Jam di HP */
-            .exam-header { padding: 10px; flex-wrap: wrap; gap: 10px; justify-content: center; }
-            .exam-title-clay { font-size: 12px; padding: 6px 12px; }
-            .exam-timer-clay { font-size: 16px; padding: 6px 14px; width: 100%; text-align: center; }
+            /* Penyesuaian agar Teks & Jam tetap muat bersampingan di layar kecil */
+            .exam-header { padding: 10px; gap: 8px; }
+            .exam-header-content { gap: 10px; }
+            .exam-title-clay { font-size: 12px; padding: 6px 12px; gap: 6px; }
+            .class-badge { padding: 2px 6px; font-size: 10px; }
+            .exam-timer-clay { font-size: 14px; padding: 6px 12px; }
         }
 
         @media (min-width: 601px) {
@@ -293,15 +309,22 @@
         </div>
     </div>
 
-    <!-- 4. STUDENT EXAM PAGE (CLAYMORPHISM KHUSUS HEADER SAJA) -->
+    <!-- 4. STUDENT EXAM PAGE (HEADER SESUAI PERMINTAAN) -->
     <div id="exam-page">
         <div class="exam-header">
-            <div class="exam-title-clay">
+            <!-- Logo Pindah Ke Atas -->
+            <div class="security-logo-top" title="Sistem Anti-Cheat Aktif">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                Sistem Pengawasan Aktif 
-                <span id="student-class" class="class-badge"></span>
             </div>
-            <div id="timer" class="exam-timer-clay">00:00:00</div>
+            
+            <!-- Pembungkus agar bersebelahan -->
+            <div class="exam-header-content">
+                <div class="exam-title-clay">
+                    Ujian Sedang Berlangsung 
+                    <span id="student-class" class="class-badge"></span>
+                </div>
+                <div id="timer" class="exam-timer-clay">00:00:00</div>
+            </div>
         </div>
         <iframe id="exam-frame" allow="clipboard-write" src="about:blank"></iframe>
     </div>
