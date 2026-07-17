@@ -331,7 +331,7 @@
                 <div class="input-group">
                     <label>Link Google Spreadsheet Respon (Opsional)</label>
                     <input type="url" id="gform-sheet" placeholder="https://docs.google.com/spreadsheets/d/...">
-                    <small style="font-size: 12px; color: var(--text-muted); margin-top: 4px; display: block;">* Pastikan akses link Spreadsheet diset ke "Siapa saja yang memiliki link / Anyone with the link" agar fitur Cek Nilai AI bekerja.</small>
+                    <small style="font-size: 12px; color: var(--text-muted); margin-top: 4px; display: block;">* Wajib diset: "Siapa saja yang memiliki link / Anyone with the link".</small>
                 </div>
 
                 <div class="input-group">
@@ -524,7 +524,7 @@
         </div>
     </div>
 
-    <!-- 9. AI SCORE MODAL (FITUR BARU) -->
+    <!-- 9. AI SCORE MODAL (DIPERBAIKI) -->
     <div class="modal-overlay" id="score-modal" onclick="if(event.target===this) closeScoreModal()">
         <div class="modal-box">
             <h3>
@@ -910,7 +910,7 @@
             document.getElementById('result-box').style.display = 'none';
         }
 
-        // --- FITUR BARU: AI CEK NILAI ---
+        // --- FITUR BARU: AI CEK NILAI (FIXED CORS & PARSING) ---
         async function openScoreModal(id) {
             const db = getExamDb();
             const exam = db.find(e => e.id === id);
@@ -936,20 +936,21 @@
                 if (!match) throw new Error("Format Link Spreadsheet tidak dikenali.");
                 const sheetId = match[1];
                 
-                // Fetch data mentah CSV dari Google Sheets (Link harus diset Publik)
-                const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
-                const res = await fetch(csvUrl);
+                // MENGATASI CORS BLOCKED (Menggunakan Proxy AllOrigins)
+                const targetCSVUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetCSVUrl)}`;
                 
+                const res = await fetch(proxyUrl);
                 if (!res.ok) {
                     throw new Error("Gagal mengambil data. Pastikan akses Spreadsheet diset ke 'Siapa saja yang memiliki link / Anyone with the link'.");
                 }
                 
                 let csvText = await res.text();
-                // Batasi teks agar tidak terkena limit token (Ambil sekitar 5000 karakter saja untuk dianalisa AI)
+                // Batasi teks agar tidak terkena limit token
                 if (csvText.length > 5000) csvText = csvText.substring(0, 5000);
 
                 // Kirim ke Gemini AI
-                const apiKey = "AIzaSyDSM89kgPZNfT9owyyj3fewcJz8fbwtvmo"; // API Key dari Ana
+                const apiKey = "AIzaSyDSM89kgPZNfT9owyyj3fewcJz8fbwtvmo"; 
                 const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 
                 const prompt = `Berikut adalah data mentah CSV dari hasil ujian siswa. Tolong deteksi otomatis mana kolom yang berisi "Nama Siswa" dan mana kolom yang berisi "Nilai/Skor". Abaikan kolom waktu (timestamp) dan kolom jawaban.
@@ -957,7 +958,7 @@
 Kembalikan output HANYA dalam format JSON murni berupa array of objects seperti ini:
 [{"nama": "Nama Siswa", "nilai": "Skor"}]
 
-Jika tidak ada data siswa, kembalikan []. Jangan berikan tambahan teks atau tag markdown (seperti \`\`\`json) apa pun.
+Jika tidak ada data siswa, kembalikan []. Dilarang keras memberikan penjelasan teks apapun selain JSON murni.
 
 Data CSV:
 ${csvText}`;
@@ -970,15 +971,23 @@ ${csvText}`;
                     })
                 });
 
-                if (!aiRes.ok) throw new Error("Gagal terhubung ke Gemini AI.");
+                if (!aiRes.ok) {
+                    const errData = await aiRes.json();
+                    throw new Error("API Gemini Error: " + (errData.error?.message || "Tidak dapat memproses AI"));
+                }
                 
                 const aiData = await aiRes.json();
                 let resultText = aiData.candidates[0].content.parts[0].text;
                 
-                // Bersihkan respon AI jika masih ada sisa markdown
-                resultText = resultText.replace(/```json/g, '').replace(/```/g, '').trim();
+                // MENGATASI BUG PARSING JSON DARI AI MENGGUNAKAN REGEX
+                let scoreData = [];
+                const jsonMatch = resultText.match(/\[[\s\S]*\]/);
                 
-                let scoreData = JSON.parse(resultText);
+                if (jsonMatch) {
+                    scoreData = JSON.parse(jsonMatch[0]);
+                } else {
+                    throw new Error("AI gagal menyusun data ke dalam format yang bisa dibaca sistem.");
+                }
 
                 if (!Array.isArray(scoreData) || scoreData.length === 0) {
                     resultBox.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">Tidak ada data siswa yang ditemukan atau spreadsheet masih kosong.</p>';
