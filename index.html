@@ -26,6 +26,7 @@
             --primary: #7b8aff;
             --primary-hover: #6a7ae6;
             --danger: #ff7b7b;
+            --danger-dark: #e53e3e;
             --success: #67d69b;
             --warning: #ffc46b;
             --text-main: #2d3748;
@@ -44,10 +45,7 @@
         }
 
         /* Reset background for exam */
-        body.exam-active {
-            background: #ffffff !important;
-            overflow: hidden;
-        }
+        body.exam-active { background: #ffffff !important; overflow: hidden; }
 
         .container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
 
@@ -64,7 +62,6 @@
             font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
             box-shadow: inset 4px 4px 8px rgba(255,255,255,0.4), inset -4px -4px 8px rgba(0,0,0,0.1), var(--clay-shadow-out-sm);
         }
-
         .clay-btn:hover { transform: translateY(-2px); background: var(--primary-hover); }
         .clay-btn:active { transform: translateY(2px); box-shadow: inset 6px 6px 12px rgba(0,0,0,0.2), inset -6px -6px 12px rgba(255,255,255,0.5); }
         .clay-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -84,7 +81,6 @@
         .logo-clay { width: 80px; height: 80px; background: var(--primary); border-radius: 28px; margin: 0 auto 24px; display: flex; justify-content: center; align-items: center; color: white; font-size: 32px; font-weight: 800; box-shadow: inset 4px 4px 8px rgba(255,255,255,0.4), inset -4px -4px 8px rgba(0,0,0,0.1), var(--clay-shadow-out-sm); }
         .login-box h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; color: var(--text-main); }
         .login-box p.desc { color: var(--text-muted); font-size: 15px; margin-bottom: 35px; font-weight: 600; }
-
         .input-group { text-align: left; margin-bottom: 24px; position: relative; }
         .input-group label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); margin-left: 8px; }
         .show-hide { position: absolute; right: 20px; top: 44px; font-size: 13px; font-weight: 700; color: var(--primary); cursor: pointer; user-select: none; }
@@ -93,7 +89,6 @@
         .clay-checkbox-label { display: flex; align-items: center; cursor: pointer; gap: 10px; }
         .clay-checkbox { appearance: none; width: 24px; height: 24px; border-radius: 8px; background: var(--clay-surface); box-shadow: var(--clay-shadow-in); cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .clay-checkbox:checked::after { content: '✔'; color: var(--primary); font-size: 16px; font-weight: 900; position: absolute; }
-        
         #login-loading { display: none; margin-top: 20px; font-size: 14px; font-weight: 700; color: var(--primary); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
@@ -110,7 +105,6 @@
         
         .inner-card { background: var(--clay-surface); padding: 30px; border-radius: 28px; box-shadow: inset 4px 4px 10px #c5d2e0, inset -4px -4px 10px #ffffff; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.7); }
         .inner-card h3 { font-size: 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: 800; }
-
         .result-box { display: none; margin-top: 25px; background: #e3f7ed; box-shadow: var(--clay-shadow-out-sm); padding: 25px; border-radius: 24px; border: 2px solid white; }
         .result-box .clay-input { background: white; margin: 15px 0; color: var(--success); }
 
@@ -123,7 +117,6 @@
         .history-meta { display: flex; gap: 20px; font-size: 14px; color: var(--text-muted); font-weight: 700; flex-wrap: wrap; }
         .history-actions { display: flex; gap: 10px; flex-wrap: wrap; }
         .history-actions .clay-btn { flex: 1; min-width: 100px; text-align: center; justify-content: center; display: flex; align-items: center;}
-        
         .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); font-weight: 700; }
 
         /* 3. RULES PAGE */
@@ -141,70 +134,43 @@
         .agree-clay { background: #e4e9f2; box-shadow: var(--clay-shadow-in); padding: 15px 20px; border-radius: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: all 0.2s; }
         .agree-clay label { font-size: 14px; font-weight: 700; color: var(--text-main); cursor: pointer; flex-grow: 1; user-select: none; line-height: 1.4; }
 
-        /* 4. EXAM PAGE (CLAYMORPHISM HEADER ONLY) */
+        /* 4. EXAM PAGE - KHUSUS LOGO & JAM CLAYMORPHISM */
         #exam-page { display: none; width: 100vw; height: 100vh; background: #ffffff; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
         
         .exam-header { 
-            background: var(--clay-surface); 
-            color: var(--text-main); 
-            padding: 12px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-shrink: 0; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: var(--clay-bg); 
+            padding: 12px 15px; 
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
             border-bottom: 2px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         
-        .exam-header .title { 
-            font-weight: 800; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            flex-wrap: wrap; 
-            font-size: 15px;
+        /* Logo Keamanan Clay */
+        .exam-title-clay { 
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 14px; font-weight: 800;
+            background: var(--clay-surface); padding: 8px 16px; border-radius: 16px;
+            box-shadow: var(--clay-shadow-out-sm); border: 2px solid white; color: var(--primary);
         }
-        
-        .exam-security-icon { 
-            width: 34px; 
-            height: 34px; 
-            background: var(--clay-surface); 
-            border-radius: 10px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            box-shadow: var(--clay-shadow-out-sm); 
-            border: 2px solid white; 
-            font-size: 16px; 
+        .exam-title-clay svg { width: 22px; height: 22px; stroke: var(--primary); }
+        .class-badge { 
+            background: var(--primary); color: white; padding: 4px 10px; border-radius: 8px; font-size: 12px; 
+            box-shadow: inset 2px 2px 4px rgba(255,255,255,0.3), inset -2px -2px 4px rgba(0,0,0,0.1);
         }
 
-        .exam-header .class-badge { 
-            background: #e4e9f2; 
-            color: var(--primary); 
-            box-shadow: var(--clay-shadow-in); 
-            padding: 6px 12px; 
-            border-radius: 8px; 
-            font-size: 12px; 
-            font-weight: 800; 
+        /* Jam Ujian Clay */
+        .exam-timer-clay { 
+            font-size: 18px; font-weight: 800; font-family: monospace; 
+            background: var(--danger-dark); color: white; padding: 8px 16px; border-radius: 12px; 
+            box-shadow: inset 4px 4px 8px rgba(255,255,255,0.4), inset -4px -4px 8px rgba(0,0,0,0.2), var(--clay-shadow-out-sm);
+            border: 2px solid #ff9999;
+            letter-spacing: 1px;
         }
 
-        #timer { 
-            font-size: 18px; 
-            font-weight: 800; 
-            font-family: monospace; 
-            background: var(--danger); 
-            color: white; 
-            padding: 6px 14px; 
-            border-radius: 12px; 
-            box-shadow: inset 3px 3px 6px rgba(255,255,255,0.4), inset -3px -3px 6px rgba(0,0,0,0.1), var(--clay-shadow-out-sm); 
-            border: 2px solid rgba(255,255,255,0.6);
-        }
-
-        iframe { flex-grow: 1; border: none; width: 100%; background: #ffffff; }
+        iframe { flex-grow: 1; border: none; width: 100%; height: 100%; background: #ffffff; display: block; }
 
         /* 5. BLOCKED & SUCCESS PAGES */
-        #blocked-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%); color: white; z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; animation: violentShake 0.15s infinite; overflow-y: auto; }
-        @keyframes violentShake { 0% { transform: translate(2px, 1px) rotate(0deg); } 50% { transform: translate(-4px, 2px) rotate(-1deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+        #blocked-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%); color: white; z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; animation: violentShake 0.1s infinite; overflow-y: auto; }
+        @keyframes violentShake { 0% { transform: translate(3px, 2px) rotate(0deg); } 50% { transform: translate(-5px, 3px) rotate(-1deg); } 100% { transform: translate(2px, -3px) rotate(1deg); } }
         .blocked-card { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(16px); border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 24px; padding: 30px 20px; max-width: 550px; width: 100%; margin: auto; }
         .blocked-icon svg { width: 50px; height: 50px; stroke: #dc2626; margin-bottom: 15px; background: white; border-radius: 50%; padding: 10px; }
         .blocked-card h1 { font-size: 26px; margin-bottom: 10px; font-weight: 900; }
@@ -214,7 +180,7 @@
         #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; z-index: 10000; justify-content: center; align-items: center; text-align: center; padding: 20px; }
         .success-card { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; padding: 40px 20px; max-width: 600px; }
 
-        /* Modal */
+        /* Modals & Toasts */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(230, 238, 246, 0.8); backdrop-filter: blur(8px); z-index: 5000; justify-content: center; align-items: center; padding: 15px; overflow-y: auto; }
         .modal-box { width: 100%; max-width: 500px; padding: 30px 20px; margin: auto; animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -223,7 +189,6 @@
         .modal-actions { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
         .btn-cancel { background: #cbd5e1; color: var(--text-main); }
         
-        /* Toast Notification Mobile-First Center */
         #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; z-index: 20000; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
         .toast { padding: 16px 20px; border-radius: 16px; color: white; font-weight: 700; box-shadow: var(--clay-shadow-out-sm); animation: slideInMob 0.3s ease, fadeOutMob 0.5s ease 2.5s forwards; font-size: 14px;}
         .toast.success { background: var(--success); }
@@ -232,25 +197,21 @@
         @keyframes slideInMob { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeOutMob { to { opacity: 0; transform: translateY(-15px); } }
 
-        /* RESPONSIVE KHUSUS LAYAR HP (<600px) */
+        /* RESPONSIVE */
         @media (max-width: 600px) {
             .login-box, .dash-glass, .rules-box { padding: 25px 20px; border-radius: 28px; }
             .inner-card { padding: 20px; border-radius: 20px;}
             .dash-header h2 { font-size: 22px; }
             .history-meta { flex-direction: column; gap: 8px; }
             .rules-list li { flex-direction: column; text-align: center; gap: 10px; padding: 15px;}
-            .rules-list li:hover { transform: scale(1.02); }
             .modal-box { padding: 25px 15px; border-radius: 28px; }
             
-            /* EXAM HEADER MOBILE */
-            .exam-header { padding: 12px 15px; }
-            .exam-header .title { font-size: 13px; gap: 8px; }
-            .exam-security-icon { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; }
-            #timer { font-size: 15px; padding: 4px 10px; }
-            .exam-header .class-badge { padding: 4px 8px; font-size: 11px; }
+            /* Perkecil Logo & Jam di HP */
+            .exam-header { padding: 10px; flex-wrap: wrap; gap: 10px; justify-content: center; }
+            .exam-title-clay { font-size: 12px; padding: 6px 12px; }
+            .exam-timer-clay { font-size: 16px; padding: 6px 14px; width: 100%; text-align: center; }
         }
 
-        /* LAYAR DESKTOP */
         @media (min-width: 601px) {
             .grid-2-cols { grid-template-columns: 1fr 1fr; }
             .history-item-top { flex-direction: row; align-items: center; }
@@ -270,25 +231,9 @@
             <div class="logo-clay">P</div>
             <h2>Portal Ujian</h2>
             <p class="desc">Sistem Anti Nyontek Premium v3.2</p>
-            
-            <div class="input-group">
-                <label>Username</label>
-                <input type="text" id="username" class="clay-input" placeholder="Masukkan username" onkeydown="if(event.key==='Enter') login()">
-            </div>
-            
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="password" class="clay-input" placeholder="Masukkan password" onkeydown="if(event.key==='Enter') login()">
-                <span class="show-hide" onclick="togglePassword()">Show</span>
-            </div>
-
-            <div class="clay-checkbox-wrapper">
-                <label class="clay-checkbox-label">
-                    <input type="checkbox" id="remember" class="clay-checkbox"> 
-                    Remember Me
-                </label>
-            </div>
-
+            <div class="input-group"><label>Username</label><input type="text" id="username" class="clay-input" placeholder="Masukkan username" onkeydown="if(event.key==='Enter') login()"></div>
+            <div class="input-group"><label>Password</label><input type="password" id="password" class="clay-input" placeholder="Masukkan password" onkeydown="if(event.key==='Enter') login()"><span class="show-hide" onclick="togglePassword()">Show</span></div>
+            <div class="clay-checkbox-wrapper"><label class="clay-checkbox-label"><input type="checkbox" id="remember" class="clay-checkbox"> Remember Me</label></div>
             <button class="clay-btn" id="btn-login" onclick="login()">Sign In</button>
             <div id="login-loading">Memvalidasi Kredensial...</div>
         </div>
@@ -298,42 +243,22 @@
     <div id="dashboard-page">
         <div class="clay-card dash-glass">
             <div class="dash-header">
-                <div>
-                    <h2>Dashboard Admin</h2>
-                    <p>Selamat datang, <strong id="user-display"></strong> | <span id="role-display" style="color:var(--primary);"></span></p>
-                </div>
+                <div><h2>Dashboard Admin</h2><p>Selamat datang, <strong id="user-display"></strong> | <span id="role-display" style="color:var(--primary);"></span></p></div>
                 <button class="clay-btn btn-logout" onclick="logout()">Logout System</button>
             </div>
 
             <div class="inner-card">
                 <h3>📝 Setup Ujian Baru</h3>
-                
-                <div class="input-group">
-                    <label>Link Google Form Ujian (URL)</label>
-                    <input type="url" id="gform-link" class="clay-input" placeholder="https://docs.google.com/forms/d/e/.../viewform">
-                </div>
-
-                <div class="input-group">
-                    <label>Nama URL (Opsional)</label>
-                    <input type="text" id="custom-slug" class="clay-input" placeholder="Contoh: ujian-matematika" style="text-transform: lowercase;">
-                </div>
-
+                <div class="input-group"><label>Link Google Form Ujian (URL)</label><input type="url" id="gform-link" class="clay-input" placeholder="https://docs.google.com/forms/d/e/.../viewform"></div>
+                <div class="input-group"><label>Nama URL (Opsional)</label><input type="text" id="custom-slug" class="clay-input" placeholder="Contoh: ujian-matematika" style="text-transform: lowercase;"></div>
                 <div class="grid-2-cols">
-                    <div class="input-group" style="margin-bottom:0;">
-                        <label>Durasi (Menit)</label>
-                        <input type="number" id="exam-time" class="clay-input" value="60">
-                    </div>
-                    <div class="input-group" style="margin-bottom:0;">
-                        <label>Target Kelas</label>
-                        <input type="text" id="exam-classes" class="clay-input" placeholder="XII IPA 1">
-                    </div>
+                    <div class="input-group" style="margin-bottom:0;"><label>Durasi (Menit)</label><input type="number" id="exam-time" class="clay-input" value="60"></div>
+                    <div class="input-group" style="margin-bottom:0;"><label>Target Kelas</label><input type="text" id="exam-classes" class="clay-input" placeholder="XII IPA 1"></div>
                 </div>
-
                 <div style="margin-top: 25px; display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="clay-btn" id="btn-generate" onclick="generateStudentLink()" style="flex:1;">Generate Link Ujian</button>
                     <button class="clay-btn btn-cancel" id="btn-cancel-edit" onclick="cancelEdit()" style="display:none; flex:1;">Batal</button>
                 </div>
-
                 <div id="result-box" class="result-box">
                     <h4 style="color: var(--success); font-size: 16px; margin-bottom: 8px;">✅ Berhasil Generate Link!</h4>
                     <p style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Bagikan link di bawah ini kepada siswa.</p>
@@ -358,49 +283,25 @@
                 <h2>Peraturan & Tata Tertib</h2>
                 <p style="color: var(--text-muted); font-weight: 600; margin-top: 8px; font-size: 14px;">Pahami aturan sebelum memulai ujian.</p>
             </div>
-            
             <ul class="rules-list">
-                <li>
-                    <div class="icon-clay">🚫</div>
-                    <div class="rules-text">
-                        <strong>Sistem Anti-Cheat Aktif</strong>
-                        <p>Sistem memantau layar. Pelanggaran berat = ujian terhenti otomatis.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="icon-clay">📱</div>
-                    <div class="rules-text">
-                        <strong>Larangan Multi-Tasking</strong>
-                        <p>Dilarang buka tab baru, split-screen, atau pindah ke aplikasi lain.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="icon-clay">⏱️</div>
-                    <div class="rules-text">
-                        <strong>Waktu Ujian Berjalan</strong>
-                        <p>Waktu <span id="rules-time-display" style="color:var(--primary); font-weight: 800;"></span> menit dihitung mundur saat tombol Lanjut ditekan.</p>
-                    </div>
-                </li>
+                <li><div class="icon-clay">🚫</div><div class="rules-text"><strong>Sistem Anti-Cheat Aktif</strong><p>Sistem memantau layar. Pelanggaran berat = ujian terhenti otomatis.</p></div></li>
+                <li><div class="icon-clay">📱</div><div class="rules-text"><strong>Larangan Multi-Tasking</strong><p>Dilarang buka tab baru, split-screen, atau pindah ke aplikasi lain.</p></div></li>
+                <li><div class="icon-clay">⏱️</div><div class="rules-text"><strong>Waktu Ujian Berjalan</strong><p>Waktu <span id="rules-time-display" style="color:var(--primary); font-weight: 800;"></span> menit dihitung mundur saat tombol Lanjut ditekan.</p></div></li>
             </ul>
-
-            <label class="agree-clay">
-                <input type="checkbox" id="agree-rules" class="clay-checkbox" onchange="toggleLanjutBtn()">
-                <label for="agree-rules">Saya mengerti dan bersedia mematuhi aturan.</label>
-            </label>
-
+            <label class="agree-clay"><input type="checkbox" id="agree-rules" class="clay-checkbox" onchange="toggleLanjutBtn()"><label for="agree-rules">Saya mengerti dan bersedia mematuhi aturan.</label></label>
             <button class="clay-btn" id="btn-lanjut" onclick="startExamFromRules()" disabled>Lanjut ke Soal Ujian</button>
         </div>
     </div>
 
-    <!-- 4. STUDENT EXAM PAGE (CLAYMORPHISM HEADER) -->
+    <!-- 4. STUDENT EXAM PAGE (CLAYMORPHISM KHUSUS HEADER SAJA) -->
     <div id="exam-page">
         <div class="exam-header">
-            <div class="title">
-                <div class="exam-security-icon">🛡️</div>
-                Ujian Sedang Berlangsung 
+            <div class="exam-title-clay">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Sistem Pengawasan Aktif 
                 <span id="student-class" class="class-badge"></span>
             </div>
-            <div id="timer">00:00:00</div>
+            <div id="timer" class="exam-timer-clay">00:00:00</div>
         </div>
         <iframe id="exam-frame" allow="clipboard-write" src="about:blank"></iframe>
     </div>
@@ -431,15 +332,8 @@
         <div class="clay-card modal-box">
             <h3>Edit Data Ujian <button class="modal-close" onclick="closeModal()">&times;</button></h3>
             <input type="hidden" id="edit-id">
-            
-            <div class="input-group">
-                <label>Link Google Form Baru</label>
-                <input type="url" id="edit-link" class="clay-input">
-            </div>
-            <div class="input-group">
-                <label>Nama URL Baru</label>
-                <input type="text" id="edit-slug" class="clay-input" style="text-transform: lowercase;">
-            </div>
+            <div class="input-group"><label>Link Google Form Baru</label><input type="url" id="edit-link" class="clay-input"></div>
+            <div class="input-group"><label>Nama URL Baru</label><input type="text" id="edit-slug" class="clay-input" style="text-transform: lowercase;"></div>
             <div class="grid-2-cols">
                 <div class="input-group" style="margin-bottom:0;"><label>Durasi (Menit)</label><input type="number" id="edit-time" class="clay-input"></div>
                 <div class="input-group" style="margin-bottom:0;"><label>Kelas</label><input type="text" id="edit-classes" class="clay-input"></div>
@@ -465,7 +359,7 @@
     </div>
 
     <script>
-        // LOGIKA SISTEM TETAP TIDAK DIUBAH (HANYA UI CSS MOBILE & EXAM HEADER)
+        // --- LOGIKA ENKRIPSI DAN UTILITIES ---
         function encodeExamData(obj) { return encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(obj))))); }
         function decodeExamData(str) { try { return JSON.parse(decodeURIComponent(escape(atob(str)))); } catch(e) { return null; } }
         function getBaseUrl() { return window.location.href.split('?')[0].split('#')[0]; }
@@ -477,6 +371,7 @@
             localStorage.setItem('sys_users', JSON.stringify([{ username: 'soal', password: 'soal321', role: 'Super Admin', name: 'Administrator', status: 'Active' }]));
         }
 
+        // --- SISTEM LOGIN & ADMIN ---
         function login() {
             const user = document.getElementById('username').value.trim();
             const pass = document.getElementById('password').value;
@@ -675,19 +570,74 @@
             editingId = null; document.getElementById('btn-cancel-edit').style.display = 'none';
         }
 
-        // --- EXAM LOGIC ---
+        // --- SISTEM ALARM & GETARAN EXTREME ---
+        let audioCtx = null;
+        let alarmInterval = null;
+        let vibrateInterval = null;
+
+        function startExtremeAlarm() {
+            // Aktifkan Audio Web API
+            if (!audioCtx) {
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } 
+                catch(e) { console.error("Audio API tidak support"); }
+            }
+            
+            if (audioCtx) {
+                const playTone = (freq, type, duration) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = type; // square atau sawtooth agar suara bising/tajam
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(1.0, audioCtx.currentTime); // Volume maksimal yang aman
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + duration);
+                };
+
+                // Pola suara sirine kencang bergantian
+                alarmInterval = setInterval(() => {
+                    playTone(800, 'square', 0.4); 
+                    setTimeout(() => playTone(1200, 'sawtooth', 0.4), 400); 
+                }, 800);
+            }
+
+            // Aktifkan Getaran Agresif
+            if ('vibrate' in navigator) {
+                const pattern = [300, 100, 300, 100, 300, 100, 300];
+                navigator.vibrate(pattern); 
+                vibrateInterval = setInterval(() => {
+                    navigator.vibrate(pattern);
+                }, 1000);
+            }
+        }
+
+        function stopExtremeAlarm() {
+            if (alarmInterval) clearInterval(alarmInterval);
+            if (vibrateInterval) clearInterval(vibrateInterval);
+            if ('vibrate' in navigator) navigator.vibrate(0); 
+        }
+
+        // --- EXAM & ANTI-CHEAT LOGIC ---
         let examTimerInterval, isExamActive = false, isExamFinished = false, violationCount = 0; 
+        
         function initExamPortal(data) {
             document.getElementById('rules-page').style.display = 'none';
             document.getElementById('exam-page').style.display = 'flex';
             document.body.classList.add('exam-active');
             isExamActive = true;
             document.getElementById('exam-frame').src = data.url;
-            if(data.classes) document.getElementById('student-class').innerText = "Kelas: " + data.classes;
+            if(data.classes) document.getElementById('student-class').innerText = " " + data.classes;
             startTimer(data.time * 60);
+            
             setTimeout(() => {
                 document.addEventListener("visibilitychange", () => document.hidden && triggerViolation("Meninggalkan Tab / Mematikan Layar"));
-                window.addEventListener("blur", () => setTimeout(() => triggerViolation("Berpindah Aplikasi"), 300));
+                window.addEventListener("blur", () => setTimeout(() => {
+                    // Cek elemen aktif
+                    if (document.activeElement && document.activeElement.tagName === "IFRAME") return;
+                    if (document.hidden) return;
+                    triggerViolation("Berpindah Aplikasi")
+                }, 300));
                 window.addEventListener("resize", () => window.innerHeight < 450 && window.innerWidth > 500 && triggerViolation("Split Screen Terdeteksi"));
             }, 500);
         }
@@ -699,17 +649,32 @@
                 alert("PERINGATAN: " + reason + "! Ujian dimuat ulang.");
                 document.getElementById('exam-frame').src = document.getElementById('exam-frame').src;
             } else {
+                // BLOKIR DAN NYALAKAN ALARM EXTREME
                 isExamActive = false; clearInterval(examTimerInterval);
                 document.getElementById('exam-page').style.display = 'none';
                 document.getElementById('block-reason').innerText = reason;
                 document.getElementById('blocked-screen').style.display = 'flex';
                 document.body.classList.remove('exam-active');
+                
+                startExtremeAlarm();
+                
+                // Pastikan audio terpicu jika browser mengeblok autoplay
+                const activateAlarm = () => { 
+                    startExtremeAlarm(); 
+                    document.removeEventListener('click', activateAlarm); 
+                    document.removeEventListener('touchstart', activateAlarm); 
+                };
+                document.addEventListener('click', activateAlarm);
+                document.addEventListener('touchstart', activateAlarm);
             }
         }
 
         function retryExam() {
             const link = document.getElementById('retry-exam-link').value;
-            if (link) window.location.href = link;
+            if (link) {
+                stopExtremeAlarm();
+                window.location.href = link;
+            }
         }
 
         function startTimer(sec) {
