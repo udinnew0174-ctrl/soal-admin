@@ -60,16 +60,8 @@
         }
 
         .clay-btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 20px;
+            font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
             box-shadow: inset 4px 4px 8px rgba(255,255,255,0.4), inset -4px -4px 8px rgba(0,0,0,0.1), var(--clay-shadow-out-sm);
         }
 
@@ -85,7 +77,6 @@
         }
         .clay-input:focus { box-shadow: inset 8px 8px 16px #b8c5d4, inset -8px -8px 16px #ffffff; }
 
-        /* Helper Classes (Grid Responsive) */
         .grid-2-cols { display: grid; grid-template-columns: 1fr; gap: 15px; }
 
         /* 1. LOGIN LAYOUT */
@@ -123,11 +114,10 @@
         .result-box { display: none; margin-top: 25px; background: #e3f7ed; box-shadow: var(--clay-shadow-out-sm); padding: 25px; border-radius: 24px; border: 2px solid white; }
         .result-box .clay-input { background: white; margin: 15px 0; color: var(--success); }
 
-        /* History List */
         .history-list { display: flex; flex-direction: column; gap: 20px; }
         .history-item { background: var(--clay-surface); border-radius: 20px; padding: 20px; box-shadow: var(--clay-shadow-out-sm); display: flex; flex-direction: column; gap: 15px; transition: transform 0.2s; border: 2px solid white; }
         .history-item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-        .history-info { flex: 1; min-width: 0; /* Penting untuk mobile ellipsis */ }
+        .history-info { flex: 1; min-width: 0; }
         .history-slug { font-weight: 800; color: var(--primary); font-size: 15px; cursor: pointer; word-break: break-all; }
         .history-url { font-size: 13px; color: var(--text-muted); margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; display: block; }
         .history-meta { display: flex; gap: 20px; font-size: 14px; color: var(--text-muted); font-weight: 700; flex-wrap: wrap; }
@@ -151,14 +141,68 @@
         .agree-clay { background: #e4e9f2; box-shadow: var(--clay-shadow-in); padding: 15px 20px; border-radius: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: all 0.2s; }
         .agree-clay label { font-size: 14px; font-weight: 700; color: var(--text-main); cursor: pointer; flex-grow: 1; user-select: none; line-height: 1.4; }
 
-        /* 4. EXAM & WARNING PAGES */
+        /* 4. EXAM PAGE (CLAYMORPHISM HEADER ONLY) */
         #exam-page { display: none; width: 100vw; height: 100vh; background: #ffffff; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
-        .exam-header { background: #1a202c; color: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .exam-header .title { font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 14px;}
-        .exam-header .class-badge { background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 6px; font-size: 12px; }
-        #timer { font-size: 16px; font-weight: 700; font-family: monospace; background: #e53e3e; padding: 4px 10px; border-radius: 8px; }
+        
+        .exam-header { 
+            background: var(--clay-surface); 
+            color: var(--text-main); 
+            padding: 12px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-shrink: 0; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-bottom: 2px solid white;
+        }
+        
+        .exam-header .title { 
+            font-weight: 800; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+            font-size: 15px;
+        }
+        
+        .exam-security-icon { 
+            width: 34px; 
+            height: 34px; 
+            background: var(--clay-surface); 
+            border-radius: 10px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: var(--clay-shadow-out-sm); 
+            border: 2px solid white; 
+            font-size: 16px; 
+        }
+
+        .exam-header .class-badge { 
+            background: #e4e9f2; 
+            color: var(--primary); 
+            box-shadow: var(--clay-shadow-in); 
+            padding: 6px 12px; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            font-weight: 800; 
+        }
+
+        #timer { 
+            font-size: 18px; 
+            font-weight: 800; 
+            font-family: monospace; 
+            background: var(--danger); 
+            color: white; 
+            padding: 6px 14px; 
+            border-radius: 12px; 
+            box-shadow: inset 3px 3px 6px rgba(255,255,255,0.4), inset -3px -3px 6px rgba(0,0,0,0.1), var(--clay-shadow-out-sm); 
+            border: 2px solid rgba(255,255,255,0.6);
+        }
+
         iframe { flex-grow: 1; border: none; width: 100%; background: #ffffff; }
 
+        /* 5. BLOCKED & SUCCESS PAGES */
         #blocked-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #dc2626 0%, #7f1d1d 100%); color: white; z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; animation: violentShake 0.15s infinite; overflow-y: auto; }
         @keyframes violentShake { 0% { transform: translate(2px, 1px) rotate(0deg); } 50% { transform: translate(-4px, 2px) rotate(-1deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
         .blocked-card { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(16px); border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 24px; padding: 30px 20px; max-width: 550px; width: 100%; margin: auto; }
@@ -188,7 +232,7 @@
         @keyframes slideInMob { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeOutMob { to { opacity: 0; transform: translateY(-15px); } }
 
-        /* RESPONSIVE PENGHALUSAN KHUSUS LAYAR HP (<600px) */
+        /* RESPONSIVE KHUSUS LAYAR HP (<600px) */
         @media (max-width: 600px) {
             .login-box, .dash-glass, .rules-box { padding: 25px 20px; border-radius: 28px; }
             .inner-card { padding: 20px; border-radius: 20px;}
@@ -197,6 +241,13 @@
             .rules-list li { flex-direction: column; text-align: center; gap: 10px; padding: 15px;}
             .rules-list li:hover { transform: scale(1.02); }
             .modal-box { padding: 25px 15px; border-radius: 28px; }
+            
+            /* EXAM HEADER MOBILE */
+            .exam-header { padding: 12px 15px; }
+            .exam-header .title { font-size: 13px; gap: 8px; }
+            .exam-security-icon { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; }
+            #timer { font-size: 15px; padding: 4px 10px; }
+            .exam-header .class-badge { padding: 4px 8px; font-size: 11px; }
         }
 
         /* LAYAR DESKTOP */
@@ -341,10 +392,14 @@
         </div>
     </div>
 
-    <!-- 4. STUDENT EXAM PAGE (UNTOUCHED LOGIC) -->
+    <!-- 4. STUDENT EXAM PAGE (CLAYMORPHISM HEADER) -->
     <div id="exam-page">
         <div class="exam-header">
-            <div class="title">Ujian Sedang Berlangsung <span id="student-class" class="class-badge"></span></div>
+            <div class="title">
+                <div class="exam-security-icon">🛡️</div>
+                Ujian Sedang Berlangsung 
+                <span id="student-class" class="class-badge"></span>
+            </div>
             <div id="timer">00:00:00</div>
         </div>
         <iframe id="exam-frame" allow="clipboard-write" src="about:blank"></iframe>
@@ -410,7 +465,7 @@
     </div>
 
     <script>
-        // LOGIKA SISTEM TETAP TIDAK DIUBAH (HANYA UI CSS MOBILE)
+        // LOGIKA SISTEM TETAP TIDAK DIUBAH (HANYA UI CSS MOBILE & EXAM HEADER)
         function encodeExamData(obj) { return encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(obj))))); }
         function decodeExamData(str) { try { return JSON.parse(decodeURIComponent(escape(atob(str)))); } catch(e) { return null; } }
         function getBaseUrl() { return window.location.href.split('?')[0].split('#')[0]; }
