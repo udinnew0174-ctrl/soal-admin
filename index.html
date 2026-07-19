@@ -134,43 +134,19 @@
         .agree-clay { background: #e4e9f2; box-shadow: var(--clay-shadow-in); padding: 15px 20px; border-radius: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: all 0.2s; }
         .agree-clay label { font-size: 14px; font-weight: 700; color: var(--text-main); cursor: pointer; flex-grow: 1; user-select: none; line-height: 1.4; }
 
-        /* 4. EXAM PAGE - HEADER SUSUNAN BARU */
+        /* 4. EXAM PAGE - HEADER HANYA LOGO DAN WAKTU */
         #exam-page { display: none; width: 100vw; height: 100vh; background: #ffffff; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
         
         .exam-header { 
             background: var(--clay-bg); 
-            padding: 10px 15px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
+            padding: 12px 20px; 
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: space-between; 
+            flex-shrink: 0;
             border-bottom: 2px solid white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            gap: 8px;
-        }
-
-        /* Logo Keamanan Dipindah Ke Atas Sendiri */
-        .security-logo-top {
-            width: 38px; height: 38px;
-            background: var(--clay-surface);
-            border-radius: 12px;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: var(--clay-shadow-out-sm);
-            border: 2px solid white;
-        }
-        .security-logo-top svg { width: 22px; height: 22px; stroke: var(--primary); }
-
-        /* Pembungkus agar Teks dan Jam bisa bersebelahan */
-        .exam-header-content {
-            display: flex; flex-direction: row; justify-content: center; align-items: center; 
-            gap: 15px; width: 100%; max-width: 800px; flex-wrap: wrap;
-        }
-        
-        .exam-title-clay { 
-            display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800;
-            background: var(--clay-surface); padding: 8px 16px; border-radius: 16px;
-            box-shadow: var(--clay-shadow-out-sm); border: 2px solid white; color: var(--text-main);
-        }
-        .class-badge { 
-            background: var(--primary); color: white; padding: 4px 10px; border-radius: 8px; font-size: 12px; 
-            box-shadow: inset 2px 2px 4px rgba(255,255,255,0.3), inset -2px -2px 4px rgba(0,0,0,0.1);
         }
 
         .exam-timer-clay { 
@@ -219,12 +195,7 @@
             .history-meta { flex-direction: column; gap: 8px; }
             .rules-list li { flex-direction: column; text-align: center; gap: 10px; padding: 15px;}
             .modal-box { padding: 25px 15px; border-radius: 28px; }
-            
-            /* Penyesuaian agar Teks & Jam tetap muat bersampingan di layar kecil */
-            .exam-header { padding: 10px; gap: 8px; }
-            .exam-header-content { gap: 10px; }
-            .exam-title-clay { font-size: 12px; padding: 6px 12px; gap: 6px; }
-            .class-badge { padding: 2px 6px; font-size: 10px; }
+            .exam-header { padding: 10px; }
             .exam-timer-clay { font-size: 14px; padding: 6px 12px; }
         }
 
@@ -246,7 +217,7 @@
         <div class="login-box clay-card">
             <div class="logo-clay">P</div>
             <h2>Portal Ujian</h2>
-            <p class="desc">Sistem Anti Nyontek Premium v3.2</p>
+            <p class="desc">Sistem Anti Nyontek Premium v3.3</p>
             <div class="input-group"><label>Username</label><input type="text" id="username" class="clay-input" placeholder="Masukkan username" onkeydown="if(event.key==='Enter') login()"></div>
             <div class="input-group"><label>Password</label><input type="password" id="password" class="clay-input" placeholder="Masukkan password" onkeydown="if(event.key==='Enter') login()"><span class="show-hide" onclick="togglePassword()">Show</span></div>
             <div class="clay-checkbox-wrapper"><label class="clay-checkbox-label"><input type="checkbox" id="remember" class="clay-checkbox"> Remember Me</label></div>
@@ -266,7 +237,13 @@
             <div class="inner-card">
                 <h3>📝 Setup Ujian Baru</h3>
                 <div class="input-group"><label>Link Google Form Ujian (URL)</label><input type="url" id="gform-link" class="clay-input" placeholder="https://docs.google.com/forms/d/e/.../viewform"></div>
-                <div class="input-group"><label>Nama URL (Opsional)</label><input type="text" id="custom-slug" class="clay-input" placeholder="Contoh: ujian-matematika" style="text-transform: lowercase;"></div>
+                
+                <div class="grid-2-cols">
+                    <div class="input-group"><label>Nama URL (Opsional)</label><input type="text" id="custom-slug" class="clay-input" placeholder="Contoh: ujian-matematika" style="text-transform: lowercase;"></div>
+                    <!-- INPUT BARU UNTUK LOGO -->
+                    <div class="input-group"><label>URL Logo Sekolah (Opsional)</label><input type="url" id="exam-logo" class="clay-input" placeholder="https://contoh.com/logo-sekolah.png"></div>
+                </div>
+
                 <div class="grid-2-cols">
                     <div class="input-group" style="margin-bottom:0;"><label>Durasi (Menit)</label><input type="number" id="exam-time" class="clay-input" value="60"></div>
                     <div class="input-group" style="margin-bottom:0;"><label>Target Kelas</label><input type="text" id="exam-classes" class="clay-input" placeholder="XII IPA 1"></div>
@@ -309,22 +286,14 @@
         </div>
     </div>
 
-    <!-- 4. STUDENT EXAM PAGE (HEADER SESUAI PERMINTAAN) -->
+    <!-- 4. STUDENT EXAM PAGE (HEADER SESUAI PERMINTAAN ANA: HANYA LOGO KIRI & TIMER KANAN) -->
     <div id="exam-page">
         <div class="exam-header">
-            <!-- Logo Pindah Ke Atas -->
-            <div class="security-logo-top" title="Sistem Anti-Cheat Aktif">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
+            <!-- Logo Sekolah (Hanya muncul jika diisi di Dashboard) -->
+            <img id="school-logo" src="" alt="Logo Sekolah" style="height: 40px; object-fit: contain; display: none;">
             
-            <!-- Pembungkus agar bersebelahan -->
-            <div class="exam-header-content">
-                <div class="exam-title-clay">
-                    Ujian Sedang Berlangsung 
-                    <span id="student-class" class="class-badge"></span>
-                </div>
-                <div id="timer" class="exam-timer-clay">00:00:00</div>
-            </div>
+            <!-- Timer Ujian -->
+            <div id="timer" class="exam-timer-clay">00:00:00</div>
         </div>
         <iframe id="exam-frame" allow="clipboard-write" src="about:blank"></iframe>
     </div>
@@ -356,7 +325,13 @@
             <h3>Edit Data Ujian <button class="modal-close" onclick="closeModal()">&times;</button></h3>
             <input type="hidden" id="edit-id">
             <div class="input-group"><label>Link Google Form Baru</label><input type="url" id="edit-link" class="clay-input"></div>
-            <div class="input-group"><label>Nama URL Baru</label><input type="text" id="edit-slug" class="clay-input" style="text-transform: lowercase;"></div>
+            
+            <div class="grid-2-cols">
+                <div class="input-group"><label>Nama URL Baru</label><input type="text" id="edit-slug" class="clay-input" style="text-transform: lowercase;"></div>
+                <!-- EDIT LOGO -->
+                <div class="input-group"><label>URL Logo Sekolah</label><input type="url" id="edit-logo" class="clay-input"></div>
+            </div>
+
             <div class="grid-2-cols">
                 <div class="input-group" style="margin-bottom:0;"><label>Durasi (Menit)</label><input type="number" id="edit-time" class="clay-input"></div>
                 <div class="input-group" style="margin-bottom:0;"><label>Kelas</label><input type="text" id="edit-classes" class="clay-input"></div>
@@ -435,7 +410,8 @@
             if (examSlug) {
                 const db = JSON.parse(localStorage.getItem('exam_db') || '[]');
                 const exam = db.find(e => e.slug === examSlug);
-                if (exam) return showRulesPage({ url: exam.url, time: exam.time, classes: exam.classes });
+                // Tambahkan parsing logo saat memanggil dari slug url
+                if (exam) return showRulesPage({ url: exam.url, time: exam.time, classes: exam.classes, logo: exam.logo });
                 else return document.body.innerHTML = '<h2 style="text-align:center; padding:50px;">404 - Link tidak ditemukan</h2>';
             }
 
@@ -497,6 +473,7 @@
             let slug = document.getElementById('custom-slug').value.trim();
             const time = document.getElementById('exam-time').value;
             const classes = document.getElementById('exam-classes').value.trim();
+            const logo = document.getElementById('exam-logo').value.trim(); // Get URL Logo
 
             if (!link) return showToast("Link tidak valid!", "error");
             if (!classes) return showToast("Kelas wajib diisi!", "error");
@@ -506,14 +483,14 @@
             
             if (!editingId && db.find(e => e.slug === slug)) return showToast("Nama link sudah dipakai!", "warning");
 
-            const finalLink = `${getBaseUrl()}?examData=${encodeExamData({ url: link, time: parseInt(time), classes })}`;
+            const finalLink = `${getBaseUrl()}?examData=${encodeExamData({ url: link, time: parseInt(time), classes, logo })}`;
 
             if (editingId) {
                 const i = db.findIndex(e => e.id === editingId);
-                db[i] = { ...db[i], url: link, slug, time: parseInt(time), classes };
+                db[i] = { ...db[i], url: link, slug, time: parseInt(time), classes, logo }; // Update state Logo
                 saveExamDb(db); showToast("Diperbarui!", "success"); cancelEdit();
             } else {
-                db.unshift({ id: 'EXM-' + Date.now(), url: link, slug, time: parseInt(time), classes });
+                db.unshift({ id: 'EXM-' + Date.now(), url: link, slug, time: parseInt(time), classes, logo }); // Simpan Logo
                 saveExamDb(db); showToast("Tersimpan!", "success");
             }
 
@@ -541,7 +518,7 @@
                             <div class="history-url">${ex.url}</div>
                         </div>
                     </div>
-                    <div class="history-meta"><span>📚 ${ex.classes}</span><span>⏱️ ${ex.time} Menit</span></div>
+                    <div class="history-meta"><span>📚 ${ex.classes}</span><span>⏱️ ${ex.time} Menit</span>${ex.logo ? '<span>🖼️ Ada Logo</span>' : ''}</div>
                     <div class="history-actions">
                         <button class="clay-btn btn-warning" onclick="openEditModal('${ex.id}')">Edit</button>
                         <button class="clay-btn btn-logout" onclick="openDeleteModal('${ex.id}')">Hapus</button>
@@ -553,7 +530,7 @@
         function copySlug(slug) {
             const ex = getExamDb().find(e => e.slug === slug);
             if(ex) {
-                navigator.clipboard.writeText(`${getBaseUrl()}?examData=${encodeExamData({url: ex.url, time: ex.time, classes: ex.classes})}`);
+                navigator.clipboard.writeText(`${getBaseUrl()}?examData=${encodeExamData({url: ex.url, time: ex.time, classes: ex.classes, logo: ex.logo})}`);
                 showToast("Link disalin!", "success");
             }
         }
@@ -566,6 +543,7 @@
             document.getElementById('edit-slug').value = ex.slug;
             document.getElementById('edit-time').value = ex.time;
             document.getElementById('edit-classes').value = ex.classes;
+            document.getElementById('edit-logo').value = ex.logo || ""; // Set form edit
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
@@ -576,9 +554,11 @@
             const newSlug = generateSlug(document.getElementById('edit-slug').value);
             const newTime = document.getElementById('edit-time').value;
             const newClasses = document.getElementById('edit-classes').value;
+            const newLogo = document.getElementById('edit-logo').value.trim(); // Ambil Logo Terbaru
+            
             const db = getExamDb();
             const i = db.findIndex(e => e.id === editingId);
-            db[i] = { ...db[i], url: newLink, slug: newSlug, time: parseInt(newTime), classes: newClasses };
+            db[i] = { ...db[i], url: newLink, slug: newSlug, time: parseInt(newTime), classes: newClasses, logo: newLogo };
             saveExamDb(db); renderHistory(); closeModal(); showToast("Diperbarui!", "success");
         }
 
@@ -599,7 +579,6 @@
         let vibrateInterval = null;
 
         function startExtremeAlarm() {
-            // Aktifkan Audio Web API
             if (!audioCtx) {
                 try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } 
                 catch(e) { console.error("Audio API tidak support"); }
@@ -609,23 +588,21 @@
                 const playTone = (freq, type, duration) => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
-                    osc.type = type; // square atau sawtooth agar suara bising/tajam
+                    osc.type = type;
                     osc.frequency.value = freq;
-                    gain.gain.setValueAtTime(1.0, audioCtx.currentTime); // Volume maksimal yang aman
+                    gain.gain.setValueAtTime(1.0, audioCtx.currentTime);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.start();
                     osc.stop(audioCtx.currentTime + duration);
                 };
 
-                // Pola suara sirine kencang bergantian
                 alarmInterval = setInterval(() => {
                     playTone(800, 'square', 0.4); 
                     setTimeout(() => playTone(1200, 'sawtooth', 0.4), 400); 
                 }, 800);
             }
 
-            // Aktifkan Getaran Agresif
             if ('vibrate' in navigator) {
                 const pattern = [300, 100, 300, 100, 300, 100, 300];
                 navigator.vibrate(pattern); 
@@ -650,13 +627,21 @@
             document.body.classList.add('exam-active');
             isExamActive = true;
             document.getElementById('exam-frame').src = data.url;
-            if(data.classes) document.getElementById('student-class').innerText = " " + data.classes;
+            
+            // Logika memunculkan logo jika URL dimasukkan oleh Admin
+            const logoImg = document.getElementById('school-logo');
+            if (data.logo) {
+                logoImg.src = data.logo;
+                logoImg.style.display = 'block';
+            } else {
+                logoImg.style.display = 'none';
+            }
+
             startTimer(data.time * 60);
             
             setTimeout(() => {
                 document.addEventListener("visibilitychange", () => document.hidden && triggerViolation("Meninggalkan Tab / Mematikan Layar"));
                 window.addEventListener("blur", () => setTimeout(() => {
-                    // Cek elemen aktif
                     if (document.activeElement && document.activeElement.tagName === "IFRAME") return;
                     if (document.hidden) return;
                     triggerViolation("Berpindah Aplikasi")
@@ -672,7 +657,6 @@
                 alert("PERINGATAN: " + reason + "! Ujian dimuat ulang.");
                 document.getElementById('exam-frame').src = document.getElementById('exam-frame').src;
             } else {
-                // BLOKIR DAN NYALAKAN ALARM EXTREME
                 isExamActive = false; clearInterval(examTimerInterval);
                 document.getElementById('exam-page').style.display = 'none';
                 document.getElementById('block-reason').innerText = reason;
@@ -681,7 +665,6 @@
                 
                 startExtremeAlarm();
                 
-                // Pastikan audio terpicu jika browser mengeblok autoplay
                 const activateAlarm = () => { 
                     startExtremeAlarm(); 
                     document.removeEventListener('click', activateAlarm); 
