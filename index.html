@@ -7,7 +7,7 @@
     <meta property="og:title" content="Portal Ujian Premium | Sistem Anti-Cheat">
     <meta property="og:description" content="Silakan masuk untuk memulai ujian. Sistem ini dilengkapi proteksi Anti-Cheat.">
     
-    <title>Portal Ujian Premium - Claymorphism</title>
+    <title>Portal Ujian Premium - Modern Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* --- CLAYMORPHISM VARIABLES --- */
@@ -76,21 +76,74 @@
 
         .grid-2-cols { display: grid; grid-template-columns: 1fr; gap: 15px; }
 
-        /* 1. LOGIN LAYOUT */
+        /* 1. ORIGINAL LOGIN CLASSES (Dipertahankan karena dipakai di Dashboard) */
         .login-box { width: 100%; max-width: 440px; padding: 40px; text-align: center; }
         .logo-clay { width: 80px; height: 80px; background: var(--primary); border-radius: 28px; margin: 0 auto 24px; display: flex; justify-content: center; align-items: center; color: white; font-size: 32px; font-weight: 800; box-shadow: inset 4px 4px 8px rgba(255,255,255,0.4), inset -4px -4px 8px rgba(0,0,0,0.1), var(--clay-shadow-out-sm); }
-        .login-box h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; color: var(--text-main); }
-        .login-box p.desc { color: var(--text-muted); font-size: 15px; margin-bottom: 35px; font-weight: 600; }
         .input-group { text-align: left; margin-bottom: 24px; position: relative; }
         .input-group label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); margin-left: 8px; }
         .show-hide { position: absolute; right: 20px; top: 44px; font-size: 13px; font-weight: 700; color: var(--primary); cursor: pointer; user-select: none; }
         
-        .clay-checkbox-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; font-size: 14px; font-weight: 600; }
-        .clay-checkbox-label { display: flex; align-items: center; cursor: pointer; gap: 10px; }
-        .clay-checkbox { appearance: none; width: 24px; height: 24px; border-radius: 8px; background: var(--clay-surface); box-shadow: var(--clay-shadow-in); cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .clay-checkbox:checked::after { content: '✔'; color: var(--primary); font-size: 16px; font-weight: 900; position: absolute; }
-        #login-loading { display: none; margin-top: 20px; font-size: 14px; font-weight: 700; color: var(--primary); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* =========================================
+           1.B NEW MODERN LOGIN LAYOUT 
+           (Menggantikan tampilan login sebelumnya)
+        ========================================= */
+        #login-page {
+            background-color: #fdfaf6; 
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 50; overflow: hidden;
+        }
+        .login-nav-modern {
+            position: absolute; top: 0; left: 0; width: 100%; padding: 25px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .login-nav-modern .logo { font-size: 22px; font-weight: 800; color: #111; }
+        .login-nav-modern .right-links { display: flex; gap: 25px; align-items: center; font-size: 14px; font-weight: 700; color:#111; }
+        .btn-demo { background: #f4c38f; padding: 12px 24px; border-radius: 12px; border: none; font-weight: 700; color:#111; cursor: pointer; transition: background 0.2s; }
+        .btn-demo:hover { background: #eab57c; }
+        
+        .login-modern-card {
+            background: #ffffff; border-radius: 24px; padding: 45px 40px;
+            width: 100%; max-width: 440px; text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            position: relative; z-index: 2;
+        }
+        .login-modern-card h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; color: #111; }
+        .login-modern-card p.subtitle { color: #666; font-size: 14px; font-weight: 600; margin-bottom: 35px; line-height: 1.5; }
+        
+        .login-modern-input-group { position: relative; margin-bottom: 20px; text-align: left; }
+        .login-modern-input {
+            width: 100%; padding: 16px 20px; border-radius: 14px;
+            border: 1px solid #e2e8f0; background: #fff;
+            font-size: 14px; font-weight: 600; color: #111; outline: none; transition: all 0.3s;
+        }
+        .login-modern-input::placeholder { color: #94a3b8; }
+        .login-modern-input:focus { border-color: #f4c38f; box-shadow: 0 0 0 4px rgba(244, 195, 143, 0.15); }
+        
+        /* Modifikasi posisi show-hide khusus di card modern */
+        #login-page .show-hide { top: 18px; right: 20px; font-size: 13px; color: #666; }
+        
+        .trouble-link { text-align: left; font-size: 13px; font-weight: 700; color: #111; margin-bottom: 25px; display: block; text-decoration: none; transition: color 0.2s;}
+        .trouble-link:hover { color: #f4c38f; }
+
+        .login-modern-btn {
+            width: 100%; padding: 16px; background: #f4c38f; color: #111;
+            border: none; border-radius: 14px; font-size: 16px; font-weight: 800;
+            cursor: pointer; transition: transform 0.2s, background 0.2s;
+        }
+        .login-modern-btn:hover { background: #eab57c; transform: translateY(-2px); }
+        .login-modern-btn:active { transform: translateY(0); }
+        
+        .login-modern-footer { margin-top: 35px; font-size: 12px; color: #94a3b8; font-weight: 600; }
+        
+        /* Dekorasi Background Ala Modern Art */
+        .doodle { position: absolute; z-index: 1; }
+        .doodle-circle { top: 25%; left: 15%; width: 50px; height: 50px; border: 2px solid #111; border-radius: 50%; }
+        .doodle-box { bottom: 20%; right: 18%; width: 70px; height: 70px; background: #f4c38f; border-radius: 12px; }
+        .doodle-dots { top: 20%; right: 20%; font-size: 30px; color: #111; letter-spacing: 5px; opacity: 0.3; line-height: 10px; }
+        .doodle-line { bottom: 25%; left: 20%; width: 80px; height: 2px; background: #111; transform: rotate(-15deg); }
 
         /* 2. DASHBOARD */
         #dashboard-page { display: none; width: 100%; max-width: 1000px; padding: 15px; margin: auto; }
@@ -189,7 +242,12 @@
 
         /* RESPONSIVE AGAR TIDAK BUG DI HP */
         @media (max-width: 600px) {
-            .login-box, .dash-glass, .rules-box { padding: 25px 20px; border-radius: 28px; }
+            .login-nav-modern { padding: 25px 20px; }
+            .login-nav-modern .right-links { display: none; }
+            .login-modern-card { padding: 35px 25px; margin: 0 20px; }
+            .doodle { display: none; }
+            
+            .dash-glass, .rules-box { padding: 25px 20px; border-radius: 28px; }
             .inner-card { padding: 20px; border-radius: 20px;}
             .dash-header h2 { font-size: 22px; }
             .history-meta { flex-direction: column; gap: 8px; }
@@ -212,17 +270,48 @@
 <body>
     <div id="toast-container"></div>
 
-    <!-- 1. LOGIN PAGE -->
-    <div id="login-page" class="container">
-        <div class="login-box clay-card">
-            <div class="logo-clay">P</div>
-            <h2>Portal Ujian</h2>
-            <p class="desc">Sistem Anti Nyontek Premium v3.3</p>
-            <div class="input-group"><label>Username</label><input type="text" id="username" class="clay-input" placeholder="Masukkan username" onkeydown="if(event.key==='Enter') login()"></div>
-            <div class="input-group"><label>Password</label><input type="password" id="password" class="clay-input" placeholder="Masukkan password" onkeydown="if(event.key==='Enter') login()"><span class="show-hide" onclick="togglePassword()">Show</span></div>
-            <div class="clay-checkbox-wrapper"><label class="clay-checkbox-label"><input type="checkbox" id="remember" class="clay-checkbox"> Remember Me</label></div>
-            <button class="clay-btn" id="btn-login" onclick="login()">Sign In</button>
-            <div id="login-loading">Memvalidasi Kredensial...</div>
+    <!-- 1. LOGIN PAGE (DIUBAH MENGIKUTI REFERENSI 1000110583.png) -->
+    <div id="login-page">
+        <!-- Elemen Dekorasi untuk Modern Art Look -->
+        <div class="doodle doodle-circle"></div>
+        <div class="doodle doodle-box"></div>
+        <div class="doodle doodle-dots">••<br>••</div>
+        <div class="doodle doodle-line"></div>
+        
+        <!-- Header Navigasi Palsu menyesuaikan referensi desain -->
+        <div class="login-nav-modern">
+            <div class="logo">Portal Ujian</div>
+            <div class="right-links">
+                <span style="cursor:pointer;">Sign up</span>
+                <button class="btn-demo">Request Demo</button>
+            </div>
+        </div>
+
+        <div class="login-modern-card">
+            <h2>Agent Login</h2>
+            <p class="subtitle">Hey, Enter your details to get sign in<br>to your account</p>
+            
+            <div class="login-modern-input-group">
+                <input type="text" id="username" class="login-modern-input" placeholder="Enter Email / Phone No" onkeydown="if(event.key==='Enter') login()">
+            </div>
+            
+            <div class="login-modern-input-group">
+                <input type="password" id="password" class="login-modern-input" placeholder="Passcode" onkeydown="if(event.key==='Enter') login()">
+                <span class="show-hide" onclick="togglePassword()">Hide</span>
+            </div>
+            
+            <a href="#" class="trouble-link">Having trouble in sign in?</a>
+            
+            <!-- Checkbox Remember Me dibuat tersembunyi agar fungsi Javascript tetap normal tanpa error -->
+            <input type="checkbox" id="remember" style="display:none;" checked>
+
+            <button class="login-modern-btn" id="btn-login" onclick="login()">Sign in</button>
+            
+            <div id="login-loading" style="display: none; margin-top: 20px; font-size: 14px; font-weight: 700; color: #f4c38f; animation: pulse 1.5s infinite;">Memvalidasi Kredensial...</div>
+
+            <div class="login-modern-footer">
+                Copyright @sekolah 2026 | Privacy Policy
+            </div>
         </div>
     </div>
 
@@ -286,12 +375,11 @@
         </div>
     </div>
 
-    <!-- 4. STUDENT EXAM PAGE (HEADER SESUAI PERMINTAAN ANA: HANYA LOGO KIRI & TIMER KANAN) -->
+    <!-- 4. STUDENT EXAM PAGE -->
     <div id="exam-page">
         <div class="exam-header">
-            <!-- Logo Sekolah (Hanya muncul jika diisi di Dashboard) -->
+            <!-- Logo Sekolah -->
             <img id="school-logo" src="" alt="Logo Sekolah" style="height: 40px; object-fit: contain; display: none;">
-            
             <!-- Timer Ujian -->
             <div id="timer" class="exam-timer-clay">00:00:00</div>
         </div>
@@ -410,7 +498,6 @@
             if (examSlug) {
                 const db = JSON.parse(localStorage.getItem('exam_db') || '[]');
                 const exam = db.find(e => e.slug === examSlug);
-                // Tambahkan parsing logo saat memanggil dari slug url
                 if (exam) return showRulesPage({ url: exam.url, time: exam.time, classes: exam.classes, logo: exam.logo });
                 else return document.body.innerHTML = '<h2 style="text-align:center; padding:50px;">404 - Link tidak ditemukan</h2>';
             }
@@ -473,7 +560,7 @@
             let slug = document.getElementById('custom-slug').value.trim();
             const time = document.getElementById('exam-time').value;
             const classes = document.getElementById('exam-classes').value.trim();
-            const logo = document.getElementById('exam-logo').value.trim(); // Get URL Logo
+            const logo = document.getElementById('exam-logo').value.trim();
 
             if (!link) return showToast("Link tidak valid!", "error");
             if (!classes) return showToast("Kelas wajib diisi!", "error");
@@ -487,10 +574,10 @@
 
             if (editingId) {
                 const i = db.findIndex(e => e.id === editingId);
-                db[i] = { ...db[i], url: link, slug, time: parseInt(time), classes, logo }; // Update state Logo
+                db[i] = { ...db[i], url: link, slug, time: parseInt(time), classes, logo }; 
                 saveExamDb(db); showToast("Diperbarui!", "success"); cancelEdit();
             } else {
-                db.unshift({ id: 'EXM-' + Date.now(), url: link, slug, time: parseInt(time), classes, logo }); // Simpan Logo
+                db.unshift({ id: 'EXM-' + Date.now(), url: link, slug, time: parseInt(time), classes, logo }); 
                 saveExamDb(db); showToast("Tersimpan!", "success");
             }
 
@@ -543,7 +630,7 @@
             document.getElementById('edit-slug').value = ex.slug;
             document.getElementById('edit-time').value = ex.time;
             document.getElementById('edit-classes').value = ex.classes;
-            document.getElementById('edit-logo').value = ex.logo || ""; // Set form edit
+            document.getElementById('edit-logo').value = ex.logo || ""; 
             document.getElementById('edit-modal').style.display = 'flex';
         }
 
@@ -554,7 +641,7 @@
             const newSlug = generateSlug(document.getElementById('edit-slug').value);
             const newTime = document.getElementById('edit-time').value;
             const newClasses = document.getElementById('edit-classes').value;
-            const newLogo = document.getElementById('edit-logo').value.trim(); // Ambil Logo Terbaru
+            const newLogo = document.getElementById('edit-logo').value.trim(); 
             
             const db = getExamDb();
             const i = db.findIndex(e => e.id === editingId);
@@ -628,7 +715,6 @@
             isExamActive = true;
             document.getElementById('exam-frame').src = data.url;
             
-            // Logika memunculkan logo jika URL dimasukkan oleh Admin
             const logoImg = document.getElementById('school-logo');
             if (data.logo) {
                 logoImg.src = data.logo;
